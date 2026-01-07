@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="منصة تعليمية شاملة لمنظومة اختبار Android SDK - تعلم اختبارات Android من الصفر إلى الاحتراف">
+    <title>منصة تعليم اختبارات Android SDK | Android Testing EduHub</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- شريط التقدم -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- الرأس العلوي -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="48" rx="8" fill="#3DDC84"/>
+                    <path d="M14 16h20v4H14v-4zm0 6h20v4H14v-4zm0 6h14v4H14v-4z" fill="#073042"/>
+                    <circle cx="34" cy="32" r="6" fill="#3DDC84"/>
+                    <path d="M32 32l2 2 4-4" stroke="#073042" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="logo-text">Android Testing Hub</span>
+            </div>
+            
+            <nav class="main-nav" id="mainNav">
+                <ul class="nav-list">
+                    <li><a href="#overview" class="nav-link">نظرة عامة</a></li>
+                    <li><a href="#jars" class="nav-link">مكتبات الاختبار</a></li>
+                    <li><a href="#architecture" class="nav-link">البنية التقنية</a></li>
+                    <li><a href="#examples" class="nav-link">أمثلة عملية</a></li>
+                    <li><a href="#best-practices" class="nav-link">أفضل الممارسات</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="search-btn" id="searchBtn" aria-label="بحث">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="M21 21l-4.35-4.35"/>
+                    </svg>
+                </button>
+                <button class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="قائمة التنقل">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- قائمة البحث المنبثقة -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="ابحث عن classes أو مفاهيم...">
+            <button class="close-search" id="closeSearch">×</button>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- القائمة الجانبية -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>المحتوى السريع</h3>
+        </div>
+        <nav class="sidebar-nav">
+            <ul class="sidebar-list">
+                <li><a href="#overview" class="sidebar-link"><span class="sidebar-icon">📖</span> مقدمة</a></li>
+                <li><a href="#architecture" class="sidebar-link"><span class="sidebar-icon">🏗️</span> البنية العامة</a></li>
+                <li><a href="#android-jar" class="sidebar-link"><span class="sidebar-icon">📦</span> android.jar</a></li>
+                <li><a href="#test-base" class="sidebar-link"><span class="sidebar-icon">🧪</span> test.base.jar</a></li>
+                <li><a href="#test-mock" class="sidebar-link"><span class="sidebar-icon">🎭</span> test.mock.jar</a></li>
+                <li><a href="#test-runner" class="sidebar-link"><span class="sidebar-icon">▶️</span> test.runner.jar</a></li>
+                <li><a href="#comparison" class="sidebar-link"><span class="sidebar-icon">📊</span> مقارنة</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+        <!-- قسم الهيرو -->
+        <section class="hero" id="overview">
+            <div class="hero-content">
+                <div class="hero-badge">دورة تعليمية شاملة</div>
+                <h1 class="hero-title">تعلم منظومة اختبار <span class="highlight">Android SDK</span></h1>
+                <p class="hero-description">
+                    اكتشف أسرار اختبار تطبيقات Android من خلال فهم عميق لمكتبات الاختبار الأساسية. 
+                    دليلك الشامل لإتقان اختبارات الوحدات والتكامل والأتمتة.
+                </p>
+                <div class="hero-actions">
+                    <a href="#jars" class="btn btn-primary">ابدأ التعلم</a>
+                    <a href="#architecture" class="btn btn-secondary">استكشف البنية</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">4</span>
+                        <span class="stat-label">مكتبات رئيسية</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">أمثلة عملية</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">عربي مجاني</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <svg class="hero-diagram" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- الخلفية -->
+                    <rect x="20" y="20" width="360" height="260" rx="12" fill="#073042" fill-opacity="0.1" stroke="#3DDC84" stroke-width="2"/>
+                    
+                    <!-- مركز -->
+                    <circle cx="200" cy="150" r="40" fill="#3DDC84"/>
+                    <text x="200" y="155" text-anchor="middle" fill="#073042" font-size="12" font-weight="bold">Test</text>
+                    
+                    <!-- android.jar -->
+                    <g class="diagram-node" data-target="android-jar">
+                        <rect x="60" y="60" width="90" height="50" rx="8" fill="#073042"/>
+                        <text x="105" y="85" text-anchor="middle" fill="white" font-size="11">android.jar</text>
+                        <text x="105" y="100" text-anchor="middle" fill="#3DDC84" font-size="9">APIs أساسية</text>
+                    </g>
+                    
+                    <!-- test.base.jar -->
+                    <g class="diagram-node" data-target="test-base">
+                        <rect x="250" y="60" width="90" height="50" rx="8" fill="#FF6F00"/>
+                        <text x="295" y="85" text-anchor="middle" fill="white" font-size="11">base.jar</text>
+                        <text x="295" y="100" text-anchor="middle" fill="#FF6F00" font-size="9">اختبار قاعدة</text>
+                    </g>
+                    
+                    <!-- test.mock.jar -->
+                    <g class="diagram-node" data-target="test-mock">
+                        <rect x="60" y="190" width="90" height="50" rx="8" fill="#2196F3"/>
+                        <text x="105" y="215" text-anchor="middle" fill="white" font-size="11">mock.jar</text>
+                        <text x="105" y="230" text-anchor="middle" fill="#2196F3" font-size="9">كائنات وهمية</text>
+                    </g>
+                    
+                    <!-- test.runner.jar -->
+                    <g class="diagram-node" data-target="test-runner">
+                        <rect x="250" y="190" width="90" height="50" rx="8" fill="#9C27B0"/>
+                        <text x="295" y="215" text-anchor="middle" fill="white" font-size="11">runner.jar</text>
+                        <text x="295" y="230" text-anchor="middle" fill="#9C27B0" font-size="9">تنفيذ الاختبارات</text>
+                    </g>
+                    
+                    <!-- خطوط الاتصال -->
+                    <line x1="150" y1="85" x2="170" y2="120" stroke="#3DDC84" stroke-width="2"/>
+                    <line x1="200" y1="110" x2="250" y2="85" stroke="#FF6F00" stroke-width="2"/>
+                    <line x1="150" y1="215" x2="170" y2="180" stroke="#2196F3" stroke-width="2"/>
+                    <line x1="200" y1="190" x2="250" y2="215" stroke="#9C27B0" stroke-width="2"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- قسم البنية التقنية -->
+        <section class="section architecture-section" id="architecture">
+            <div class="section-header">
+                <h2 class="section-title">البنية التقنية لمنظومة الاختبار</h2>
+                <p class="section-description">فهم كيفية تفاعل مكونات منظومة اختبار Android مع بعضها البعض</p>
+            </div>
+            
+            <div class="architecture-diagram">
+                <svg viewBox="0 0 800 500" class="full-architecture-diagram">
+                    <!-- الخلفية -->
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#3DDC84;stop-opacity:0.2" />
+                            <stop offset="100%" style="stop-color:#073042;stop-opacity:0.2" />
+                        </linearGradient>
+                        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.15"/>
+                        </filter>
+                    </defs>
+                    
+                    <!-- Layer 1: Android Runtime -->
+                    <g class="arch-layer">
+                        <rect x="100" y="400" width="600" height="80" rx="12" fill="#1A1A2E"/>
+                        <text x="400" y="440" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Android Runtime (ART)</text>
+                        <text x="400" y="460" text-anchor="middle" fill="#888" font-size="11">تنفيذ حقيقي للتوابع</text>
+                    </g>
+                    
+                    <!-- Layer 2: android.jar -->
+                    <g class="arch-layer">
+                        <rect x="100" y="300" width="600" height="80" rx="12" fill="url(#grad1)" stroke="#3DDC84" stroke-width="2"/>
+                        <text x="400" y="335" text-anchor="middle" fill="white" font-size="14" font-weight="bold">android.jar - Android APIs</text>
+                        <text x="400" y="355" text-anchor="middle" fill="#ccc" font-size="11">واجهات برمجية للتطبيقات</text>
+                        <text x="400" y="370" text-anchor="middle" fill="#3DDC84" font-size="10">Activity • Service • BroadcastReceiver • ContentProvider</text>
+                    </g>
+                    
+                    <!-- Layer 3: Testing Libraries -->
+                    <g class="arch-layer">
+                        <rect x="50" y="180" width="220" height="100" rx="12" fill="#073042" filter="url(#shadow)"/>
+                        <text x="160" y="210" text-anchor="middle" fill="#FF6F00" font-size="12" font-weight="bold">android.test.base</text>
+                        <text x="160" y="235" text-anchor="middle" fill="white" font-size="10">AndroidTestCase • Instrumentation</text>
+                        <text x="160" y="255" text-anchor="middle" fill="#888" font-size="9">اختبارات أساسية</text>
+                        
+                        <rect x="290" y="180" width="220" height="100" rx="12" fill="#073042" filter="url(#shadow)"/>
+                        <text x="400" y="210" text-anchor="middle" fill="#2196F3" font-size="12" font-weight="bold">android.test.mock</text>
+                        <text x="400" y="235" text-anchor="middle" fill="white" font-size="10">MockContext • MockApplication</text>
+                        <text x="400" y="255" text-anchor="middle" fill="#888" font-size="9">كائنات وهمية</text>
+                        
+                        <rect x="530" y="180" width="220" height="100" rx="12" fill="#073042" filter="url(#shadow)"/>
+                        <text x="640" y="210" text-anchor="middle" fill="#9C27B0" font-size="12" font-weight="bold">android.test.runner</text>
+                        <text x="640" y="235" text-anchor="middle" fill="white" font-size="10">AndroidJUnitRunner</text>
+                        <text x="640" y="255" text-anchor="middle" fill="#888" font-size="9">مشغل الاختبارات</text>
+                    </g>
+                    
+                    <!-- Layer 4: Test Code -->
+                    <g class="arch-layer">
+                        <rect x="150" y="50" width="500" height="110" rx="12" fill="#0D1B2A" stroke="#3DDC84" stroke-width="2" stroke-dasharray="5,5"/>
+                        <text x="400" y="80" text-anchor="middle" fill="#3DDC84" font-size="14" font-weight="bold">كود الاختبارات (Test Code)</text>
+                        <text x="400" y="105" text-anchor="middle" fill="white" font-size="11">JUnit Tests • Espresso • UI Automator</text>
+                        <text x="400" y="125" text-anchor="middle" fill="#888" font-size="10">الكود الذي تكتبه لاختبار تطبيقك</text>
+                        <text x="400" y="145" text-anchor="middle" fill="#3DDC84" font-size="9">@Test • @Before • @After • @Rule</text>
+                    </g>
+                    
+                    <!-- أسهم التوجيه -->
+                    <path d="M400 160 L400 180" stroke="#3DDC84" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <path d="M160 280 L160 300" stroke="#FF6F00" stroke-width="2"/>
+                    <path d="M400 280 L400 300" stroke="#2196F3" stroke-width="2"/>
+                    <path d="M640 280 L640 300" stroke="#9C27B0" stroke-width="2"/>
+                    <path d="M400 380 L400 400" stroke="#3DDC84" stroke-width="2"/>
+                </svg>
+            </div>
+            
+            <div class="flow-explanation">
+                <div class="flow-step">
+                    <div class="flow-number">1</div>
+                    <div class="flow-content">
+                        <h4>كتابة الاختبارات</h4>
+                        <p>يستخدم المطور توannotatios مثل @Test و @Before لكتابة حالات الاختبار</p>
+                    </div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-number">2</div>
+                    <div class="flow-content">
+                        <h4>اختيار المكتبات</h4>
+                        <p>تحديد المكتبات المناسبة بناءً على نوع الاختبار (وحدة، تكامل، UI)</p>
+                    </div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-number">3</div>
+                    <div class="flow-content">
+                        <h4>تنفيذ الاختبارات</h4>
+                        <p>مشغل الاختبارات (Runner) يتحكم في تنفيذ الاختبارات وجمع النتائج</p>
+                    </div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-number">4</div>
+                    <div class="flow-content">
+                        <h4>الحصول على النتائج</h4>
+                        <p>توليد تقارير الاختبارات وتقييم نجاح أو فشل الاختبارات</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم مكتبات الاختبار -->
+        <section class="section jars-section" id="jars">
+            <div class="section-header">
+                <h2 class="section-title">مكتبات اختبار Android</h2>
+                <p class="section-description">تفصيل شامل لأربعة ملفات JAR الأساسية في منظومة الاختبار</p>
+            </div>
+            
+            <div class="jar-cards">
+                <!-- android.jar -->
+                <div class="jar-card" id="android-jar">
+                    <div class="card-header android-color">
+                        <div class="card-icon">📦</div>
+                        <div class="card-title">
+                            <h3>android.jar</h3>
+                            <span class="card-badge">أساسي</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">المكتبة الأساسية التي تحتوي على تنفيذ واجهات Android البرمجية (APIs) في شكل قابل للتحميل.</p>
+                        <div class="card-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">حجم تقريبي</span>
+                                <span class="stat-value">50+ MB</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">الطبقات</span>
+                                <span class="stat-value">100+ classes</span>
+                            </div>
+                        </div>
+                        <div class="card-classes">
+                            <h4>ال classes الرئيسية:</h4>
+                            <ul>
+                                <li><code>Activity</code> - واجهة المستخدم الرئيسية</li>
+                                <li><code>Service</code> - خدمات الخلفية</li>
+                                <li><code>Context</code> - سياق التطبيق</li>
+                                <li><code>Intent</code> - تنقل بين المكونات</li>
+                                <li><code>BroadcastReceiver</code> - استقبال الإشعارات</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="card-btn" data-target="android-jar-details">اعرف المزيد</button>
+                    </div>
+                </div>
+
+                <!-- android.test.base.jar -->
+                <div class="jar-card" id="test-base">
+                    <div class="card-header base-color">
+                        <div class="card-icon">🧪</div>
+                        <div class="card-title">
+                            <h3>test.base.jar</h3>
+                            <span class="card-badge">قاعدة</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">المكتبة الأساسية التي توفر classes والأساسيات اللازمة لكتابة اختبارات Android.</p>
+                        <div class="card-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">حجم تقريبي</span>
+                                <span class="stat-value">500 KB</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">الموروثة من</span>
+                                <span class="stat-value">JUnit</span>
+                            </div>
+                        </div>
+                        <div class="card-classes">
+                            <h4>ال classes الرئيسية:</h4>
+                            <ul>
+                                <li><code>AndroidTestCase</code> - حالة اختبار أساسية</li>
+                                <li><code>ApplicationTestCase</code> - اختبار Application</li>
+                                <li><code>ServiceTestCase</code> - اختبار Services</li>
+                                <li><code>Instrumentation</code> - التحكم في المكونات</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="card-btn" data-target="test-base-details">اعرف المزيد</button>
+                    </div>
+                </div>
+
+                <!-- android.test.mock.jar -->
+                <div class="jar-card" id="test-mock">
+                    <div class="card-header mock-color">
+                        <div class="card-icon">🎭</div>
+                        <div class="card-title">
+                            <h3>test.mock.jar</h3>
+                            <span class="card-badge">وهمية</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">مكتبة متخصصة في توفير كائنات وهمية (Mocks) للكائنات الأساسية في نظام Android.</p>
+                        <div class="card-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">حجم تقريبي</span>
+                                <span class="stat-value">300 KB</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">أنماط</span>
+                                <span class="stat-value">Mocking</span>
+                            </div>
+                        </div>
+                        <div class="card-classes">
+                            <h4>ال classes الرئيسية:</h4>
+                            <ul>
+                                <li><code>MockContext</code> - سياق وهمي</li>
+                                <li><code>MockApplication</code> - تطبيق وهمي</li>
+                                <li><code>MockContentResolver</code> - محلل محتوى وهمي</li>
+                                <li><code>MockResources</code> - موارد وهمية</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="card-btn" data-target="test-mock-details">اعرف المزيد</button>
+                    </div>
+                </div>
+
+                <!-- android.test.runner.jar -->
+                <div class="jar-card" id="test-runner">
+                    <div class="card-header runner-color">
+                        <div class="card-icon">▶️</div>
+                        <div class="card-title">
+                            <h3>test.runner.jar</h3>
+                            <span class="card-badge">مشغل</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">المكتبة المسؤولة عن تشغيل الاختبارات وإدارتها في بيئة Android.</p>
+                        <div class="card-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">حجم تقريبي</span>
+                                <span class="stat-value">400 KB</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">المعيار</span>
+                                <span class="stat-value">JUnit 4</span>
+                            </div>
+                        </div>
+                        <div class="card-classes">
+                            <h4>ال classes الرئيسية:</h4>
+                            <ul>
+                                <li><code>AndroidJUnitRunner</code> - المشغل الرئيسي</li>
+                                <li><code>InstrumentationTestRunner</code> - مشغل كلاسيكي</li>
+                                <li><code>TestSuiteBuilder</code> - بناء مجموعات اختبار</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="card-btn" data-target="test-runner-details">اعرف المزيد</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم التفاصيل التفصيلية -->
+        <section class="section details-section">
+            <!-- android.jar Details -->
+            <div class="detail-block" id="android-jar-details">
+                <div class="detail-header android-color">
+                    <h2>ملف android.jar - المكتبة الأساسية</h2>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-intro">
+                        <h3>ما هو android.jar؟</h3>
+                        <p>ملف android.jar هو المكتبة الأساسية التي تحتوي على تنفيذ كامل لواجهات Android البرمجية (APIs) في شكل قابل للتحميل، ويستخدم في بيئة التطوير للسماح للمترجمات بالتعرف على واجهات Android والتعامل معها.</p>
+                    </div>
+                    
+                    <div class="detail-features">
+                        <h3>المميزات الرئيسية:</h3>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">🔍</div>
+                                <h4>تحقق وقت التجميع</h4>
+                                <p>يوفر معلومات للمترجم للتحقق من صحة استخدام Android APIs</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">📝</div>
+                                <h4>الإكمال التلقائي</h4>
+                                <p>يُمكّن المحررات من عرض اقتراحات ذكية أثناء كتابة الكود</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">🔗</div>
+                                <h4>ربط الواجهات</h4>
+                                <p>يوفر توقيعات التوابع لنظام بناء Android (D8/R8)</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">📚</div>
+                                <h4>توثيق API</h4>
+                                <p>يحتوي على JavaDoc للمطورين لفهم استخدام كل مكون</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <h4>مثال: استخدام Activity من android.jar</h4>
+                            <div class="code-actions">
+                                <button class="copy-btn" data-code="android-jar-example">نسخ</button>
+                            </div>
+                        </div>
+                        <pre class="code-block"><code class="language-java" id="android-jar-example">import android.app.Activity;
+import android.os.Bundle;
+import android.widget.TextView;
+
+public class MainActivity extends Activity {
+    
+    private TextView greetingText;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        // استخدام المكونات من android.jar
+        greetingText = findViewById(R.id.greeting);
+        greetingText.setText("مرحباً بك في تطبيق Android!");
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // منطق آخر
+    }
+}</code></pre>
+                    </div>
+                    
+                    <div class="important-note">
+                        <div class="note-icon">⚠️</div>
+                        <div class="note-content">
+                            <h4>ملاحظة مهمة:</h4>
+                            <p>في بيئة التطوير، قد يكون تنفيذ التوابع في android.jar فارغاً (Stub). التنفيذ الفعلي يأتي من Android Runtime (ART) على الجهاز أو المحاكي.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- test.base.jar Details -->
+            <div class="detail-block" id="test-base-details">
+                <div class="detail-header base-color">
+                    <h2>ملف android.test.base.jar - قاعدة الاختبار</h2>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-intro">
+                        <h3>ما هو android.test.base.jar؟</h3>
+                        <p>ملف android.test.base.jar هو المكتبة الأساسية التي توفر classes والأساسيات اللازمة لكتابة اختبارات Android، ويحتوي على classes الأساسية التي ترث منها جميع classes الاختبار الأخرى.</p>
+                    </div>
+                    
+                    <div class="detail-features">
+                        <h3>ال classes الأساسية:</h3>
+                        <div class="classes-list">
+                            <div class="class-item">
+                                <h4>AndroidTestCase</h4>
+                                <p>الحالة الأساسية للاختبارات في Android، توفر إمكانية الوصول للسياق والموارد</p>
+                                <pre><code>public class MyTest extends AndroidTestCase {
+    public void testSomething() {
+        assertTrue("Condition should be true", true);
+    }
+}</code></pre>
+                            </div>
+                            <div class="class-item">
+                                <h4>ApplicationTestCase</h4>
+                                <p>لاختبار مكون Application والتحقق من تهيئته بشكل صحيح</p>
+                                <pre><code>public class MyAppTest extends ApplicationTestCase&lt;MyApp&gt; {
+    public MyAppTest() {
+        super(MyApp.class);
+    }
+    
+    public void testAppCreation() {
+        createApplication();
+        assertNotNull(getApplication());
+    }
+}</code></pre>
+                            </div>
+                            <div class="class-item">
+                                <h4>ServiceTestCase</h4>
+                                <p>لاختبار Services والتحقق من دورة حياتها</p>
+                                <pre><code>public class MyServiceTest extends ServiceTestCase&lt;MyService&gt; {
+    public MyServiceTest() {
+        super(MyService.class);
+    }
+    
+    public void testServiceStart() {
+        Intent startIntent = new Intent();
+        startIntent.setClass(getContext(), MyService.class);
+        startService(startIntent);
+        assertNotNull(getService());
+    }
+}</code></pre>
+                            </div>
+                            <div class="class-item">
+                                <h4>Instrumentation</h4>
+                                <p>توفر واجهة للتحكم في دورة حياة المكونات أثناء الاختبار</p>
+                                <pre><code>public class MyInstrumentation extends Instrumentation {
+    @Override
+    public void onCreate(Bundle arguments) {
+        super.onCreate(arguments);
+        // تهيئة Instrumentation
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <h4>مثال: اختبار باستخدام AndroidTestCase</h4>
+                            <div class="code-actions">
+                                <button class="copy-btn" data-code="test-base-example">نسخ</button>
+                            </div>
+                        </div>
+                        <pre class="code-block"><code class="language-java" id="test-base-example">import android.test.AndroidTestCase;
+import android.content.Context;
+
+public class UtilityTest extends AndroidTestCase {
+    
+    private Context context;
+    private MyCalculator calculator;
+    
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        context = getContext();
+        calculator = new MyCalculator();
+    }
+    
+    public void testAddition() {
+        int result = calculator.add(2, 3);
+        assertEquals("2 + 3 should equal 5", 5, result);
+    }
+    
+    public void testDivisionByZero() {
+        try {
+            calculator.divide(10, 0);
+            fail("Should throw IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            // متوقع
+        }
+    }
+    
+    public void testContextAccess() {
+        assertNotNull("Context should not be null", context);
+    }
+    
+    @Override
+    protected void tearDown() throws Exception {
+        calculator = null;
+        super.tearDown();
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- test.mock.jar Details -->
+            <div class="detail-block" id="test-mock-details">
+                <div class="detail-header mock-color">
+                    <h2>ملف android.test.mock.jar - الكائنات الوهمية</h2>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-intro">
+                        <h3>ما هو android.test.mock.jar؟</h3>
+                        <p>ملف android.test.mock.jar هو مكتبة متخصصة في توفير mocks للكائنات الأساسية في نظام Android، وهي كائنات وهمية تحاكي سلوك الكائنات الحقيقية بطريقة يمكن التحكم بها في الاختبارات.</p>
+                    </div>
+                    
+                    <div class="detail-features">
+                        <h3>فوائد استخدام الكائنات الوهمية:</h3>
+                        <div class="benefits-list">
+                            <div class="benefit-item">
+                                <span class="benefit-icon">🚀</span>
+                                <div>
+                                    <h4>اختبارات سريعة</h4>
+                                    <p>لا حاجة لتشغيل محاكي أو جهاز فعلي</p>
+                                </div>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">🔒</span>
+                                <div>
+                                    <h4>عزل الاختبارات</h4>
+                                    <p>اختبار منطق الأعمال بدون تأثير خارجي</p>
+                                </div>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">🎯</span>
+                                <div>
+                                    <h4>تحكم كامل</h4>
+                                    <p>محاكاة سيناريوهات مختلفة بسهولة</p>
+                                </div>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">💰</span>
+                                <div>
+                                    <h4>توفير موارد</h4>
+                                    <p>لا حاجة لبنية تحتية للاختبار</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-features">
+                        <h3>الكائنات الوهمية المتاحة:</h3>
+                        <div class="mocks-grid">
+                            <div class="mock-item">
+                                <h4>MockContext</h4>
+                                <p>يحاكي سياق التطبيق بدون تشغيل تطبيق حقيقي</p>
+                            </div>
+                            <div class="mock-item">
+                                <h4>MockApplication</h4>
+                                <p>يحاكي Application class مع إمكانية تخصيص السلوك</p>
+                            </div>
+                            <div class="mock-item">
+                                <h4>MockContentResolver</h4>
+                                <p>يحاكي ContentResolver للاختبار بدون قاعدة بيانات حقيقية</p>
+                            </div>
+                            <div class="mock-item">
+                                <h4>MockContentProvider</h4>
+                                <p>مزود محتوى وهمي لاختبار عمليات CRUD</p>
+                            </div>
+                            <div class="mock-item">
+                                <h4>MockResources</h4>
+                                <p>موارد وهمية للتحقق من تحميل الموارد</p>
+                            </div>
+                            <div class="mock-item">
+                                <h4>MockSharedPreferences</h4>
+                                <p>تفضيلات وهمية لاختبار حفظ البيانات</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <h4>مثال: استخدام MockContext و MockSharedPreferences</h4>
+                            <div class="code-actions">
+                                <button class="copy-btn" data-code="test-mock-example">نسخ</button>
+                            </div>
+                        </div>
+                        <pre class="code-block"><code class="language-java" id="test-mock-example">import android.test.mock.MockContext;
+import android.test.mock.MockSharedPreferences;
+import android.content.SharedPreferences;
+
+public class SettingsManagerTest {
+    
+    private MockContext mockContext;
+    private SettingsManager settingsManager;
+    
+    @Before
+    public void setUp() {
+        mockContext = new MockContext();
+        
+        // إنشاء تفضيلات وهمية
+        SharedPreferences mockPrefs = mockContext.getSharedPreferences(
+            "test_prefs", 
+            Context.MODE_PRIVATE
+        );
+        
+        settingsManager = new SettingsManager(mockPrefs);
+    }
+    
+    @Test
+    public void testSaveAndLoadSetting() {
+        // محاكاة حفظ إعداد
+        settingsManager.saveSetting("theme", "dark");
+        
+        // محاكاة قراءة الإعداد
+        String theme = settingsManager.getSetting("theme", "light");
+        
+        assertEquals("Theme should be dark", "dark", theme);
+    }
+    
+    @Test
+    public void testDefaultValue() {
+        String nonExistent = settingsManager.getSetting("non_existent", "default");
+        
+        assertEquals("Should return default value", "default", nonExistent);
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- test.runner.jar Details -->
+            <div class="detail-block" id="test-runner-details">
+                <div class="detail-header runner-color">
+                    <h2>ملف android.test.runner.jar - مشغل الاختبارات</h2>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-intro">
+                        <h3>ما هو android.test.runner.jar؟</h3>
+                        <p>ملف android.test.runner.jar هو المكتبة المسؤولة عن تشغيل الاختبارات وإدارتها في بيئة Android، ويحتوي على classes التي تتحكم في تنفيذ الاختبارات وجمع النتائج وتقديمها.</p>
+                    </div>
+                    
+                    <div class="detail-features">
+                        <h3>المشغلات الرئيسية:</h3>
+                        <div class="runners-comparison">
+                            <div class="runner-item">
+                                <div class="runner-header">
+                                    <h4>AndroidJUnitRunner</h4>
+                                    <span class="runner-badge modern">حديث</span>
+                                </div>
+                                <p>المشغل الرئيسي الحديث المستخدم في AndroidX Test</p>
+                                <ul>
+                                    <li>دعم JUnit 4 الكامل</li>
+                                    <li>تكامل مع AndroidX Test</li>
+                                    <li>دعم اختبارات Parametrized</li>
+                                    <li>Test Orchestration</li>
+                                </ul>
+                            </div>
+                            <div class="runner-item">
+                                <div class="runner-header">
+                                    <h4>InstrumentationTestRunner</h4>
+                                    <span class="runner-badge legacy">كلاسيكي</span>
+                                </div>
+                                <p>المشغل الكلاسيكي للتوافقية الخلفية</p>
+                                <ul>
+                                    <li>دعم JUnit 3/4</li>
+                                    <li>التوافقية القديمة</li>
+                                    <li>لا يزال مدعوماً</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <h4>مثال: إعداد AndroidJUnitRunner في build.gradle</h4>
+                            <div class="code-actions">
+                                <button class="copy-btn" data-code="test-runner-gradle">نسخ</button>
+                            </div>
+                        </div>
+                        <pre class="code-block" id="test-runner-gradle"><code class="language-groovy">android {
+    defaultConfig {
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
+    }
+}
+
+dependencies {
+    // AndroidX Test
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    
+    //.junit 4
+    androidTestImplementation 'junit:junit:4.13.2'
+    
+    // Mockito for mocking
+    androidTestImplementation 'org.mockito:mockito-core:5.3.1'
+}</code></pre>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <h4>مثال: اختبار باستخدام AndroidJUnitRunner</h4>
+                            <div class="code-actions">
+                                <button class="copy-btn" data-code="test-runner-example">نسخ</button>
+                            </div>
+                        </div>
+                        <pre class="code-block"><code class="language-java" id="test-runner-example">import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.rule.ActivityTestRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+
+@RunWith(AndroidJUnit4.class)
+public class MainActivityTest {
+    
+    @Rule
+    public ActivityTestRule&lt;MainActivity&gt; activityRule = 
+        new ActivityTestRule<>(MainActivity.class);
+    
+    @Test
+    public void testGreetingTextDisplayed() {
+        onView(withId(R.id.greeting))
+            .check(matches(withText("مرحباً بك في تطبيق Android!")));
+    }
+    
+    @Test
+    public void testButtonClick() {
+        onView(withId(R.id.button))
+            .perform(click());
+        
+        onView(withId(R.id.result))
+            .check(matches(withText("تم النقر!")));
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم المقارنة -->
+        <section class="section comparison-section" id="comparison">
+            <div class="section-header">
+                <h2 class="section-title">مقارنة مكتبات الاختبار</h2>
+                <p class="section-description">فهم الفروقات بين مكتبات الاختبار المختلفة ومتى تستخدم كل منها</p>
+            </div>
+            
+            <div class="comparison-table-wrapper">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>الميزة</th>
+                            <th>android.jar</th>
+                            <th>test.base.jar</th>
+                            <th>test.mock.jar</th>
+                            <th>test.runner.jar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>الغرض الرئيسي</td>
+                            <td>واجهات Android البرمجية</td>
+                            <td>أساسيات الاختبار</td>
+                            <td>كائنات وهمية</td>
+                            <td>تنفيذ الاختبارات</td>
+                        </tr>
+                        <tr>
+                            <td>بيئة التشغيل</td>
+                            <td>التجميع + Runtime</td>
+                            <td>الجهاز/المحاكي</td>
+                            <td>JVM فقط</td>
+                            <td>الجهاز/المحاكي</td>
+                        </tr>
+                        <tr>
+                            <td>سرعة الاختبارات</td>
+                            <td>--</td>
+                            <td>بطيء</td>
+                            <td>سريع جداً</td>
+                            <td>متوسط</td>
+                        </tr>
+                        <tr>
+                            <td>عزل الاختبار</td>
+                            <td>لا</td>
+                            <td>جزئي</td>
+                            <td>كامل</td>
+                            <td>لا</td>
+                        </tr>
+                        <tr>
+                            <td>حالة الاستخدام</td>
+                            <td>كتابة التطبيق</td>
+                            <td>اختبارات تكامل</td>
+                            <td>اختبارات وحدات</td>
+                            <td>تشغيل الاختبارات</td>
+                        </tr>
+                        <tr>
+                            <td>يتطلب جهاز</td>
+                            <td>للاختبار فقط</td>
+                            <td>نعم</td>
+                            <td>لا</td>
+                            <td>نعم</td>
+                        </tr>
+                        <tr>
+                            <td>الأتمتة</td>
+                            <td>لا ينطبق</td>
+                            <td>محدود</td>
+                            <td>ممتاز</td>
+                            <td>ممتاز</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="decision-guide">
+                <h3>دليل اختيار نوع الاختبار</h3>
+                <div class="decision-flow">
+                    <div class="decision-node">
+                        <div class="node-icon">❓</div>
+                        <p>ما نوع الاختبار الذي تريد كتابته؟</p>
+                    </div>
+                    <div class="decision-branch">
+                        <div class="branch">
+                            <span class="branch-label">اختبار وحدة</span>
+                            <div class="branch-path">
+                                <p>استخدم <strong>android.test.mock.jar</strong></p>
+                                <ul>
+                                    <li>لا يحتاج جهاز</li>
+                                    <li>سريع جداً</li>
+                                    <li>عزل كامل</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="branch">
+                            <span class="branch-label">اختبار تكامل</span>
+                            <div class="branch-path">
+                                <p>استخدم <strong>android.test.base.jar</strong></p>
+                                <ul>
+                                    <li>اختبار مكونات متكاملة</li>
+                                    <li>يحتاج جهاز أو محاكي</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="branch">
+                            <span class="branch-label">اختبار UI</span>
+                            <div class="branch-path">
+                                <p>استخدم <strong>test.runner.jar + Espresso</strong></p>
+                                <ul>
+                                    <li>أتمتة واجهة المستخدم</li>
+                                    <li>اختبار تفاعلات المستخدم</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الأمثلة العملية -->
+        <section class="section examples-section" id="examples">
+            <div class="section-header">
+                <h2 class="section-title">أمثلة عملية شاملة</h2>
+                <p class="section-description">أمثلة متدرجة الصعوبة لتعلم كتابة اختبارات Android بشكل احترافي</p>
+            </div>
+            
+            <div class="examples-tabs">
+                <button class="tab-btn active" data-tab="basic">مبتدئ</button>
+                <button class="tab-btn" data-tab="intermediate">متوسط</button>
+                <button class="tab-btn" data-tab="advanced">متقدم</button>
+            </div>
+            
+            <div class="examples-container">
+                <!-- مثال مبتدئ -->
+                <div class="example-block active" id="basic">
+                    <h3>مثال 1: اختبار آلة حاسبة بسيطة</h3>
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="example-label">AndroidTestCase</span>
+                            <div class="code-actions">
+                                <button class="copy-btn" data-code="calc-test">نسخ</button>
+                            </div>
+                        </div>
+                        <pre class="code-block"><code class="language-java" id="calc-test">/**
+ * اختبار آلة حاسبة بسيطة
+ * مثال مبتدئ يستخدم AndroidTestCase
+ */
+public class CalculatorTest extends AndroidTestCase {
+    
+    private Calculator calculator;
+    
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        calculator = new Calculator();
+    }
+    
+    // اختبار الجمع
+    public void testAddition() {
+        int result = calculator.add(10, 5);
+        assertEquals("10 + 5 يجب أن يساوي 15", 15, result);
+    }
+    
+    // اختبار الطرح
+    public void testSubtraction() {
+        int result = calculator.subtract(10, 5);
+        assertEquals("10 - 5 يجب أن يساوي 5", 5, result);
+    }
+    
+    // اختبار الضرب
+    public void testMultiplication() {
+        int result = calculator.multiply(10, 5);
+        assertEquals("10 × 5 يجب أن يساوي 50", 50, result);
+    }
+    
+    // اختبار القسمة
+    public void testDivision() {
+        int result = calculator.divide(10, 5);
+        assertEquals("10 ÷ 5 يجب أن يساوي 2", 2, result);
+    }
+    
+    // اختبار القسمة على صفر
+    public void testDivisionByZero() {
+        try {
+            calculator.divide(10, 0);
+            fail("يجب رمي IllegalArgumentException");
+        } catch (IllegalArgumentException expected) {
+            // متوقع - الاختبار ناجح
+        }
+    }
+    
+    // اختبار الأعداد السالبة
+    public void testNegativeNumbers() {
+        int result = calculator.add(-10, -5);
+        assertEquals("-10 + (-5) يجب أن يساوي -15", -15, result);
+    }
+}</code></pre>
+                    </div>
+                </div>
+                
+                <!-- مثال متوسط -->
+                <div class="example-block" id="intermediate">
+                    <h3>مثال 2: اختبار Repository مع Mocking</h3>
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="example-label">Mockito + MockContext</span>
+                            <div class="code-actions">
+                                <button class="copy-btn" data-code="repo-test">نسخ</button>
+                            </div>
+                        </div>
+                        <pre class="code-block"><code class="language-java" id="repo-test">/**
+ * اختبار Repository مع كائنات وهمية
+ * مثال متوسط يستخدم android.test.mock
+ */
+public class UserRepositoryTest {
+    
+    private MockContext mockContext;
+    private UserRepository repository;
+    private List&lt;User&gt; testUsers;
+    
+    @Before
+    public void setUp() {
+        mockContext = new MockContext();
+        
+        // إنشاء بيانات اختبار
+        testUsers = Arrays.asList(
+            new User(1, "أحمد", "ahmed@email.com"),
+            new User(2, "سارة", "sara@email.com"),
+            new User(3, "عمر", "omar@email.com")
+        );
+        
+        repository = new UserRepository(mockContext);
+    }
+    
+    @Test
+    public void testGetAllUsers() {
+        // محاكاة إرجاع المستخدمين
+        when(repository.getAllUsers()).thenReturn(testUsers);
+        
+        List&lt;User&gt; result = repository.getAllUsers();
+        
+        assertNotNull("قائمة المستخدمين لا يجب أن تكون null", result);
+        assertEquals("يجب إرجاع 3 مستخدمين", 3, result.size());
+        assertEquals("المستخدم الأول يجب أن يكون أحمد", "أحمد", result.get(0).getName());
+    }
+    
+    @Test
+    public void testGetUserById() {
+        User testUser = testUsers.get(0);
+        when(repository.getUserById(1)).thenReturn(testUser);
+        
+        User result = repository.getUserById(1);
+        
+        assertNotNull("المستخدم لا يجب أن يكون null", result);
+        assertEquals("المعرف يجب أن يتطابق", 1, result.getId());
+        assertEquals("الاسم يجب أن يتطابق", "أحمد", result.getName());
+    }
+    
+    @Test
+    public void testGetUserNotFound() {
+        when(repository.getUserById(999)).thenReturn(null);
+        
+        User result = repository.getUserById(999);
+        
+        assertNull("يجب إرجاع null لمستخدم غير موجود", result);
+    }
+    
+    @Test
+    public void testAddUser() {
+        User newUser = new User(4, "خالد", "khalid@email.com");
+        
+        when(repository.addUser(any(User.class))).thenReturn(true);
+        
+        boolean result = repository.addUser(newUser);
+        
+        assertTrue("إضافة المستخدم يجب أن تنجح", result);
+        verify(repository).addUser(newUser);
+    }
+    
+    @Test
+    public void testDeleteUser() {
+        when(repository.deleteUser(1)).thenReturn(true);
+        
+        boolean result = repository.deleteUser(1);
+        
+        assertTrue("حذف المستخدم يجب أن ينجح", result);
+        verify(repository).deleteUser(1);
+    }
+}</code></pre>
+                    </div>
+                </div>
+                
+                <!-- مثال متقدم -->
+                <div class="example-block" id="advanced">
+                    <h3>مثال 3: اختبار End-to-End مع Espresso</h3>
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="example-label">AndroidJUnitRunner + Espresso</span>
+                            <div class="code-actions">
+                                <button class="copy-btn" data-code="e2e-test">نسخ</button>
+                            </div>
+                        </div>
+                        <pre class="code-block"><code class="language-java" id="e2e-test">/**
+ * اختبار End-to-End باستخدام Espresso
+ * مثال متقدم يختبر تدفق كامل للتطبيق
+ */
+@RunWith(AndroidJUnit4.class)
+public class MainActivityE2ETest {
+    
+    @Rule
+    public ActivityTestRule&lt;MainActivity&gt; activityRule = 
+        new ActivityTestRule<>(MainActivity.class, true, false);
+    
+    @Before
+    public void setUp() {
+        // تهيئة قبل كل اختبار
+    }
+    
+    @Test
+    public void testLoginFlow_Success() {
+        // 1. إدخال اسم المستخدم
+        onView(withId(R.id.username_edit_text))
+            .perform(typeText("testuser"), closeSoftKeyboard());
+        
+        // 2. إدخال كلمة المرور
+        onView(withId(R.id.password_edit_text))
+            .perform(typeText("password123"), closeSoftKeyboard());
+        
+        // 3. النقر على زر تسجيل الدخول
+        onView(withId(R.id.login_button))
+            .perform(click());
+        
+        // 4. التحقق من الانتقال للشاشة الرئيسية
+        onView(withId(R.id.welcome_text))
+            .check(matches(withText("مرحباً، testuser!")));
+        
+        // 5. التحقق من ظهور القائمة
+        onView(withId(R.id.navigation_menu))
+            .check(matches(isDisplayed()));
+    }
+    
+    @Test
+    public void testLoginFlow_ValidationError() {
+        // إدخال اسم مستخدم قصير
+        onView(withId(R.id.username_edit_text))
+            .perform(typeText("ab"), closeSoftKeyboard());
+        
+        // النقر على زر تسجيل الدخول
+        onView(withId(R.id.login_button))
+            .perform(click());
+        
+        // التحقق من ظهور رسالة خطأ
+        onView(withId(R.id.username_error))
+            .check(matches(withText("اسم المستخدم يجب أن يكون 3 أحرف على الأقل")));
+        
+        // التأكد من عدم الانتقال للشاشة الرئيسية
+        onView(withId(R.id.welcome_text))
+            .check(matches(not(isDisplayed())));
+    }
+    
+    @Test
+    public void testNavigation_ToProfileScreen() {
+        // النقر على أيقونة الملف الشخصي
+        onView(withId(R.id.nav_profile))
+            .perform(click());
+        
+        // التحميل الانتقال
+        onView(withId(R.id.profile_screen))
+            .check(matches(isDisplayed()));
+        
+        // التحقق من عرض البيانات
+        onView(withId(R.id.profile_name))
+            .check(matches(withText("testuser")));
+        
+        onView(withId(R.id.profile_email))
+            .check(matches(withText("testuser@email.com")));
+    }
+    
+    @Test
+    public void testLogoutFlow() {
+        // التأكد من وجود زر تسجيل الخروج
+        onView(withId(R.id.logout_button))
+            .check(matches(isDisplayed()));
+        
+        // النقر على تسجيل الخروج
+        onView(withId(R.id.logout_button))
+            .perform(click());
+        
+        // تأكيد تسجيل الخروج
+        onView(withText("تأكيد"))
+            .perform(click());
+        
+        // التحقق من العودة لشاشة تسجيل الدخول
+        onView(withId(R.id.login_button))
+            .check(matches(isDisplayed()));
+        
+        // التأكد من عدم ظهور الشاشة الرئيسية
+        onView(withId(R.id.main_screen))
+            .check(matches(not(isDisplayed())));
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم أفضل الممارسات -->
+        <section class="section practices-section" id="best-practices">
+            <div class="section-header">
+                <h2 class="section-title">أفضل الممارسات</h2>
+                <p class="section-description">نصائح وإرشادات لكتابة اختبارات Android احترافية وفعالة</p>
+            </div>
+            
+            <div class="practices-grid">
+                <div class="practice-card">
+                    <div class="practice-icon">🎯</div>
+                    <h3>اختبر سلوكاً واحداً لكل اختبار</h3>
+                    <p>كل دالة اختبار يجب أن تختبر سلوكاً واحداً محدداً. هذا يجعل الاختبارات أسهل للفهم والصيانة وعند الفشل تعرف بالضبط ما الخطأ.</p>
+                    <div class="practice-example">
+                        <span class="good">✓ جيد:</span>
+                        <code>testAddition_SingleDigits()</code>
+                    </div>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon">🔄</div>
+                    <h3>استخدم AAA Pattern</h3>
+                    <p>نظم كل اختبار باستخدام Arrange - Act - Assert. جهز البيانات، ثم نفذ الإجراء، ثم تحقق من النتيجة.</p>
+                    <pre class="mini-code"><code>// Arrange
+int a = 5, b = 3;
+// Act
+int result = calc.add(a, b);
+// Assert
+assertEquals(8, result);</code></pre>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon">⚡</div>
+                    <h3>افصل الاختبارات السريعة عن البطيئة</h3>
+                    <p>اختبارات الوحدات (Mocking) سريعة، اختبارات التكامل بطيئة. افصلها وشغل السريعة باستمرار والبطيئة قبل الـ merge.</p>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon">🔍</div>
+                    <h3>استخدم أسماء وصفية للاختبارات</h3>
+                    <p>اسم الاختبار يجب أن يصف ما يُختبر والنتية المتوقعة. لا تستخدم أسماء مثل test1 أو test2.</p>
+                    <div class="practice-example">
+                        <span class="bad">✗ سيء:</span>
+                        <code>testCalculate()</code>
+                    </div>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon">🧩</div>
+                    <h3>استخدم Test Suites</h3>
+                    <p>نظم اختباراتك في مجموعات منطقية (Test Suites) لتسهيل تشغيلها وإدارتها. مثل: LoginTests, PaymentTests.</p>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon">📊</div>
+                    <h3>قم بتغطية الكود باستمرار</h3>
+                    <p>استخدم أدوات مثل JaCoCo لقياس تغطية الكود وحاول الوصول لـ 80%+ للطبقات المهمة. لكن لا تهمل جودة الاختبارات للكمية.</p>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon">🤖</div>
+                    <h3>أتمت الاختبارات في CI/CD</h3>
+                    <p>شغل الاختبارات تلقائياً مع كل commit أو pull request. هذا يكتشف المشاكل مبكراً ويمنع دخول كود معطوب.</p>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon">🔄</div>
+                    <h3>اختبر الحالات الحدية</h3>
+                    <p>لا تختبر الحالات العادية فقط. اختبر القيم الفارغة، القيم الصفرية، القيم القصوى، والحالات الاستثنائية.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم المصادر -->
+        <section class="section resources-section">
+            <div class="section-header">
+                <h2 class="section-title">المصادر والمراجع</h2>
+                <p class="section-description">روابط مفيدة للتعمق في موضوع اختبار Android</p>
+            </div>
+            
+            <div class="resources-grid">
+                <a href="https://developer.android.com/testing" class="resource-card" target="_blank">
+                    <div class="resource-icon">📚</div>
+                    <h4>توثيق Google الرسمي</h4>
+                    <p>الدليل الشامل لاختبار Android من Google</p>
+                    <span class="resource-link">developer.android.com/testing</span>
+                </a>
+                
+                <a href="https://developer.android.com/training/testing/unit-testing" class="resource-card" target="_blank">
+                    <div class="resource-icon">🧪</div>
+                    <h4>اختبارات الوحدات</h4>
+                    <p>دليل تفصيلي لاختبارات الوحدات في Android</p>
+                    <span class="resource-link">training/testing/unit-testing</span>
+                </a>
+                
+                <a href="https://developer.android.com/training/testing/espresso-test" class="resource-card" target="_blank">
+                    <div class="resource-icon">☕</div>
+                    <h4>Espresso Testing</h4>
+                    <p>اختبارات واجهة المستخدم مع Espresso</p>
+                    <span class="resource-link">training/testing/espresso-test</span>
+                </a>
+                
+                <a href="https://developer.android.com/training/testing/ui-automator" class="resource-card" target="_blank">
+                    <div class="resource-icon">🤖</div>
+                    <h4>UI Automator</h4>
+                    <p>أتمتة اختبارات واجهة المستخدم المتقاطعة</p>
+                    <span class="resource-link">training/testing/ui-automator</span>
+                </a>
+                
+                <a href="https://github.com/google/android-testing" class="resource-card" target="_blank">
+                    <div class="resource-icon">🐙</div>
+                    <h4>مستودع GitHub</h4>
+                    <p>أمثلة واختبارات من Google</p>
+                    <span class="resource-link">github.com/google/android-testing</span>
+                </a>
+                
+                <a href="https://source.android.com/docs/testing" class="resource-card" target="_blank">
+                    <div class="resource-icon">📦</div>
+                    <h4>Android Open Source</h4>
+                    <p>اختبارات Android المصدر المفتوح</p>
+                    <span class="resource-link">source.android.com/docs/testing</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- التذييل -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+                        <rect width="48" height="48" rx="8" fill="#3DDC84"/>
+                        <path d="M14 16h20v4H14v-4zm0 6h20v4H14v-4zm0 6h14v4H14v-4z" fill="#073042"/>
+                    </svg>
+                    <span>Android Testing Hub</span>
+                </div>
+                <p class="footer-description">
+                    منصة تعليمية عربية شاملة لتعلم اختبار تطبيقات Android من الصفر إلى الاحتراف
+                </p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>روابط سريعة</h4>
+                <ul class="footer-links">
+                    <li><a href="#overview">نظرة عامة</a></li>
+                    <li><a href="#jars">مكتبات الاختبار</a></li>
+                    <li><a href="#examples">أمثلة عملية</a></li>
+                    <li><a href="#best-practices">أفضل الممارسات</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>المكتبات</h4>
+                <ul class="footer-links">
+                    <li><a href="#android-jar">android.jar</a></li>
+                    <li><a href="#test-base">test.base.jar</a></li>
+                    <li><a href="#test-mock">test.mock.jar</a></li>
+                    <li><a href="#test-runner">test.runner.jar</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>تواصل معنا</h4>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="GitHub">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Twitter">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2025 Android Testing Hub. جميع الحقوق محفوظة.</p>
+            <p>صُنع بـ ❤️ للمطورين العرب</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

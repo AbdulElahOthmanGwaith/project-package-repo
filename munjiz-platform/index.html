@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="مُنجز - منصة متكاملة للمستقلين العرب لإدارة الفواتير والعقود وعروض الأسعار">
+    <title>مُنجز | منصة إدارة الأعمال للمستقلين</title>
+    
+    <!-- الخطوط العربية -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js للرسوم البيانية -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- شريط التقدم -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- شاشة التحميل -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader">
+            <div class="loader-icon">
+                <svg viewBox="0 0 100 100" fill="none">
+                    <circle cx="50" cy="50" r="45" stroke="#005F73" stroke-width="4"/>
+                    <path d="M50 5 L50 25 M50 75 L50 95 M5 50 L25 50 M75 50 L95 50" stroke="#005F73" stroke-width="4"/>
+                    <text x="50" y="65" text-anchor="middle" font-size="12" fill="#005F73">مُنجز</text>
+                </svg>
+            </div>
+            <p class="loading-text" data-ar="جاري التحميل..." data-en="Loading...">جاري التحميل...</p>
+        </div>
+    </div>
+
+    <!-- الرأس العلوي -->
+    <header class="main-header" id="mainHeader">
+        <div class="header-content">
+            <div class="header-right">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo">
+                    <svg class="logo-icon" viewBox="0 0 50 50" fill="none">
+                        <rect width="50" height="50" rx="12" fill="#005F73"/>
+                        <path d="M15 15h20v4H15v-4zm0 6h20v4H15v-4zm0 6h14v4H15v-4z" fill="#EE9B00"/>
+                        <circle cx="38" cy="38" r="8" fill="#EE9B00"/>
+                        <path d="M36 38l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <span class="logo-text" data-ar="مُنجز" data-en="Munjiz">مُنجز</span>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="globalSearch" data-ar-placeholder="بحث..." data-en-placeholder="Search..." placeholder="بحث...">
+                </div>
+            </div>
+            
+            <div class="header-left">
+                <div class="header-actions">
+                    <!-- تبديل اللغة -->
+                    <button class="lang-toggle" id="langToggle" title="تبديل اللغة">
+                        <span class="current-lang">عربي</span>
+                        <i class="fas fa-globe"></i>
+                    </button>
+                    
+                    <!-- تبديل المظهر -->
+                    <button class="theme-toggle" id="themeToggle" title="تبديل المظهر">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    
+                    <!-- الإشعارات -->
+                    <div class="notifications-dropdown" id="notificationsDropdown">
+                        <button class="notification-btn" id="notificationBtn">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                        <div class="dropdown-menu notifications-menu" id="notificationsMenu">
+                            <div class="dropdown-header">
+                                <span data-ar="الإشعارات" data-en="Notifications">الإشعارات</span>
+                                <a href="#" data-ar="إقرأ الكل" data-en="Mark all read">إقرأ الكل</a>
+                            </div>
+                            <div class="notification-list">
+                                <div class="notification-item unread">
+                                    <div class="notification-icon success">
+                                        <i class="fas fa-file-invoice-dollar"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <p data-ar="تم استلام دفعة جديدة بقيمة 1,500 ريال" data-en="New payment received: 1,500 SAR">تم استلام دفعة جديدة بقيمة 1,500 ريال</p>
+                                        <span class="notification-time">منذ 5 دقائق</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item unread">
+                                    <div class="notification-icon warning">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <p data-ar="فاتورة #INV-2024-156 ستستحق خلال 3 أيام" data-en="Invoice #INV-2024-156 due in 3 days">فاتورة #INV-2024-156 ستستحق خلال 3 أيام</p>
+                                        <span class="notification-time">منذ ساعة</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notification-icon info">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <p data-ar="تم توقيع العقد بنجاح" data-en="Contract signed successfully">تم توقيع العقد بنجاح</p>
+                                        <span class="notification-time">منذ يوم</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- الملف الشخصي -->
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <button class="profile-btn" id="profileBtn">
+                            <img src="https://ui-avatars.com/api/?name=أحمد+محمد&background=005F73&color=fff" alt="الملف الشخصي" class="profile-avatar">
+                            <span class="profile-name">أحمد محمد</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu profile-menu" id="profileMenu">
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-user"></i>
+                                <span data-ar="الملف الشخصي" data-en="Profile">الملف الشخصي</span>
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-cog"></i>
+                                <span data-ar="الإعدادات" data-en="Settings">الإعدادات</span>
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-credit-card"></i>
+                                <span data-ar="الباقة والاشتراك" data-en="Subscription">الباقة والاشتراك</span>
+                            </a>
+                            <hr>
+                            <a href="#" class="dropdown-item logout">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span data-ar="تسجيل الخروج" data-en="Logout">تسجيل الخروج</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- القائمة الجانبية -->
+    <aside class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+            <ul class="nav-menu">
+                <li class="nav-item active" data-page="dashboard">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <span class="nav-text" data-ar="لوحة التحكم" data-en="Dashboard">لوحة التحكم</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="invoices">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <span class="nav-text" data-ar="الفواتير" data-en="Invoices">الفواتير</span>
+                        <span class="nav-badge">12</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="contracts">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-file-contract"></i>
+                        <span class="nav-text" data-ar="العقود" data-en="Contracts">العقود</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="proposals">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-file-powerpoint"></i>
+                        <span class="nav-text" data-ar="عروض الأسعار" data-en="Proposals">عروض الأسعار</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="clients">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span class="nav-text" data-ar="العملاء" data-en="Clients">العملاء</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="media">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-images"></i>
+                        <span class="nav-text" data-ar="المكتبة الإعلامية" data-en="Media Library">المكتبة الإعلامية</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="automation">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-robot"></i>
+                        <span class="nav-text" data-ar="الأتمتة" data-en="Automation">الأتمتة</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="reports">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        <span class="nav-text" data-ar="التقارير" data-en="Reports">التقارير</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <div class="storage-info">
+                    <div class="storage-header">
+                        <span data-ar="التخزين" data-en="Storage">التخزين</span>
+                        <span class="storage-value">2.5 / 10 GB</span>
+                    </div>
+                    <div class="storage-bar">
+                        <div class="storage-progress" style="width: 25%"></div>
+                    </div>
+                </div>
+                <a href="#" class="upgrade-btn">
+                    <i class="fas fa-rocket"></i>
+                    <span data-ar="ترقية الباقة" data-en="Upgrade Plan">ترقية الباقة</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content" id="mainContent">
+        <!-- صفحة لوحة التحكم -->
+        <section class="page active" id="page-dashboard">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1 data-ar="لوحة التحكم" en="Dashboard">لوحة التحكم</h1>
+                    <p data-ar="مرحباً بك снова, أحمد! إليك ملخص أعمالك" en="Welcome back, Ahmed! Here's your business summary">مرحباً بك مرة أخرى, أحمد! إليك ملخص أعمالك</p>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-outline" onclick="showQuickAction()">
+                        <i class="fas fa-plus"></i>
+                        <span data-ar="إنشاء جديد" en="Create New">إنشاء جديد</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- بطاقات الإحصائيات -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon income">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label" data-ar="إجمالي الدخل" en="Total Income">إجمالي الدخل</span>
+                        <span class="stat-value" data-currency="SAR">145,250</span>
+                    </div>
+                    <div class="stat-trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>12.5%</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon pending">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label" data-ar="في الانتظار" en="Pending">في الانتظار</span>
+                        <span class="stat-value" data-currency="SAR">28,500</span>
+                    </div>
+                    <div class="stat-trend">
+                        <span>5 فواتير</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon contracts">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label" data-ar="عقود نشطة" en="Active Contracts">عقود نشطة</span>
+                        <span class="stat-value">8</span>
+                    </div>
+                    <div class="stat-trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>2 جديد</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon clients">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label" data-ar="عملاء جدد" en="New Clients">عملاء جدد</span>
+                        <span class="stat-value">3</span>
+                    </div>
+                    <div class="stat-trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>هذا الشهر</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- الرسوم البيانية والتقارير -->
+            <div class="dashboard-grid">
+                <div class="chart-card">
+                    <div class="card-header">
+                        <h3 data-ar="الأداء المالي" en="Financial Performance">الأداء المالي</h3>
+                        <div class="chart-filters">
+                            <button class="filter-btn active" data-period="week" data-ar="أسبوع" en="Week">أسبوع</button>
+                            <button class="filter-btn" data-period="month" data-ar="شهر" en="Month">شهر</button>
+                            <button class="filter-btn" data-period="year" data-ar="سنة" en="Year">سنة</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="card-header">
+                        <h3 data-ar="توزيع الفواتير" en="Invoice Distribution">توزيع الفواتير</h3>
+                    </div>
+                    <div class="card-body doughnut-container">
+                        <canvas id="invoiceChart"></canvas>
+                        <div class="doughnut-legend">
+                            <div class="legend-item">
+                                <span class="legend-color paid"></span>
+                                <span class="legend-text" data-ar="مدفوعة" en="Paid">مدفوعة</span>
+                                <span class="legend-value">65%</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color pending"></span>
+                                <span class="legend-text" data-ar="قيد الانتظار" en="Pending">قيد الانتظار</span>
+                                <span class="legend-value">25%</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color overdue"></span>
+                                <span class="legend-text" data-ar="متأخرة" en="Overdue">متأخرة</span>
+                                <span class="legend-value">10%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- النشاط الأخير -->
+            <div class="activity-card">
+                <div class="card-header">
+                    <h3 data-ar="النشاط الأخير" en="Recent Activity">النشاط الأخير</h3>
+                    <a href="#" class="view-all" data-ar="عرض الكل" en="View All">عرض الكل</a>
+                </div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon payment">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p><strong data-ar="شركة الأفق الرقمي" en="Alifq Digital Company">شركة الأفق الرقمي</strong> <span data-ar="سددت فاتورة #INV-2024-158" en="paid invoice #INV-2024-158">سددت فاتورة #INV-2024-158</span></p>
+                            <span class="activity-time">منذ 30 دقيقة</span>
+                        </div>
+                        <div class="activity-amount">+ 3,500 SAR</div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon contract">
+                            <i class="fas fa-file-signature"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p><strong data-ar="أحمد العمري" en="Ahmed Al-Amri">أحمد العمري</strong> <span data-ar="وقّع على عقد تصميم الهوية" en="signed the brand identity contract">وقّع على عقد تصميم الهوية</span></p>
+                            <span class="activity-time">منذ ساعتين</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon proposal">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p><span data-ar="أرسلت عرض أسعار لشركة التقنية المتقدمة" en="sent proposal to Advanced Tech Company">أرسلت عرض أسعار لشركة التقنية المتقدمة</span></p>
+                            <span class="activity-time">منذ 4 ساعات</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon reminder">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p><span data-ar="تذكير: فاتورة #INV-2024-150 ستستحق غداً" en="Reminder: Invoice #INV-2024-150 due tomorrow">تذكير: فاتورة #INV-2024-150 ستستحق غداً</span></p>
+                            <span class="activity-time">منذ 5 ساعات</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- صفحة الفواتير -->
+        <section class="page" id="page-invoices">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1 data-ar="الفواتير" en="Invoices">الفواتير</h1>
+                    <p data-ar="إدارة وطباعة الفواتير" en="Manage and print invoices">إدارة وطباعة الفواتير</p>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-primary" onclick="showCreateInvoice()">
+                        <i class="fas fa-plus"></i>
+                        <span data-ar="فاتورة جديدة" en="New Invoice">فاتورة جديدة</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- فلاتر الفواتير -->
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <select class="filter-select" id="invoiceStatus">
+                        <option value="" data-ar="جميع الحالات" en="All Status">جميع الحالات</option>
+                        <option value="paid" data-ar="مدفوعة" en="Paid">مدفوعة</option>
+                        <option value="pending" data-ar="قيد الانتظار" en="Pending">قيد الانتظار</option>
+                        <option value="overdue" data-ar="متأخرة" en="Overdue">متأخرة</option>
+                    </select>
+                    <select class="filter-select" id="invoiceDate">
+                        <option value="" data-ar="جميع التواريخ" en="All Dates">جميع التواريخ</option>
+                        <option value="today" data-ar="اليوم" en="Today">اليوم</option>
+                        <option value="week" data-ar="هذا الأسبوع" en="This Week">هذا الأسبوع</option>
+                        <option value="month" data-ar="هذا الشهر" en="This Month">هذا الشهر</option>
+                    </select>
+                </div>
+                <div class="search-filter">
+                    <i class="fas fa-search"></i>
+                    <input type="text" data-ar-placeholder="البحث في الفواتير..." en-placeholder="Search invoices..." placeholder="البحث في الفواتير...">
+                </div>
+            </div>
+            
+            <!-- جدول الفواتير -->
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-ar="رقم الفاتورة" en="Invoice #">رقم الفاتورة</th>
+                            <th data-ar="العميل" en="Client">العميل</th>
+                            <th data-ar="التاريخ" en="Date">التاريخ</th>
+                            <th data-ar="المبلغ" en="Amount">المبلغ</th>
+                            <th data-ar="الحالة" en="Status">الحالة</th>
+                            <th data-ar="الإجراءات" en="Actions">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>#INV-2024-158</strong></td>
+                            <td>
+                                <div class="client-info">
+                                    <img src="https://ui-avatars.com/api/?name=شركة+الأفق+الرقمي&background=random" alt="">
+                                    <span>شركة الأفق الرقمي</span>
+                                </div>
+                            </td>
+                            <td>2024-01-15</td>
+                            <td data-currency="SAR">3,500</td>
+                            <td><span class="status-badge paid">مدفوعة</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn" title="عرض"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn" title="تحميل PDF"><i class="fas fa-download"></i></button>
+                                    <button class="action-btn" title="إرسال"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>#INV-2024-157</strong></td>
+                            <td>
+                                <div class="client-info">
+                                    <img src="https://ui-avatars.com/api/?name=أحمد+العمري&background=random" alt="">
+                                    <span>أحمد العمري</span>
+                                </div>
+                            </td>
+                            <td>2024-01-12</td>
+                            <td data-currency="SAR">7,200</td>
+                            <td><span class="status-badge pending">قيد الانتظار</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn" title="عرض"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn" title="تحميل PDF"><i class="fas fa-download"></i></button>
+                                    <button class="action-btn" title="إرسال"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>#INV-2024-156</strong></td>
+                            <td>
+                                <div class="client-info">
+                                    <img src="https://ui-avatars.com/api/?name=سارة+علي&background=random" alt="">
+                                    <span>سارة علي</span>
+                                </div>
+                            </td>
+                            <td>2024-01-10</td>
+                            <td data-currency="SAR">2,850</td>
+                            <td><span class="status-badge overdue">متأخرة</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn" title="عرض"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn" title="تحميل PDF"><i class="fas fa-download"></i></button>
+                                    <button class="action-btn" title="إرسال"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>#INV-2024-155</strong></td>
+                            <td>
+                                <div class="client-info">
+                                    <img src="https://ui-avatars.com/api/?name=شركة+التقنية+المتقدمة&background=random" alt="">
+                                    <span>شركة التقنية المتقدمة</span>
+                                </div>
+                            </td>
+                            <td>2024-01-08</td>
+                            <td data-currency="SAR">12,500</td>
+                            <td><span class="status-badge paid">مدفوعة</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn" title="عرض"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn" title="تحميل PDF"><i class="fas fa-download"></i></button>
+                                    <button class="action-btn" title="إرسال"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- الترقيم -->
+            <div class="pagination">
+                <button class="pagination-btn" disabled><i class="fas fa-chevron-right"></i></button>
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <span class="pagination-dots">...</span>
+                <button class="pagination-btn">10</button>
+                <button class="pagination-btn"><i class="fas fa-chevron-left"></i></button>
+            </div>
+        </section>
+
+        <!-- صفحة العقود -->
+        <section class="page" id="page-contracts">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1 data-ar="العقود" en="Contracts">العقود</h1>
+                    <p data-ar="إدارة العقود والتوقيع الإلكتروني" en="Manage contracts and e-signatures">إدارة العقود والتوقيع الإلكتروني</p>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-primary" onclick="showCreateContract()">
+                        <i class="fas fa-plus"></i>
+                        <span data-ar="عقد جديد" en="New Contract">عقد جديد</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- قوالب العقود -->
+            <div class="templates-section">
+                <h3 data-ar="قوالب العقود الجاهزة" en="Contract Templates">قوالب العقود الجاهزة</h3>
+                <div class="templates-grid">
+                    <div class="template-card" onclick="useContractTemplate('development')">
+                        <div class="template-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h4 data-ar="عقد تطوير برمجيات" en="Software Development Contract">عقد تطوير برمجيات</h4>
+                        <p data-ar="عقد شامل لتطوير المواقع والتطبيقات" en="Comprehensive contract for website and app development">عقد شامل لتطوير المواقع والتطبيقات</p>
+                    </div>
+                    <div class="template-card" onclick="useContractTemplate('design')">
+                        <div class="template-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h4 data-ar="عقد تصميم هوية بصرية" en="Brand Identity Design Contract">عقد تصميم هوية بصرية</h4>
+                        <p data-ar="تصميم الشعارات والهوية البصرية" en="Logo and brand identity design">تصميم الشعارات والهوية البصرية</p>
+                    </div>
+                    <div class="template-card" onclick="useContractTemplate('content')">
+                        <div class="template-icon">
+                            <i class="fas fa-pen-fancy"></i>
+                        </div>
+                        <h4 data-ar="عقد كتابة محتوى" en="Content Writing Contract">عقد كتابة محتوى</h4>
+                        <p data-ar="محتوى إبداعي وتسويقي" en="Creative and marketing content">محتوى إبداعي وتسويقي</p>
+                    </div>
+                    <div class="template-card" onclick="useContractTemplate('marketing')">
+                        <div class="template-icon">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <h4 data-ar="عقد تسويق رقمي" en="Digital Marketing Contract">عقد تسويق رقمي</h4>
+                        <p data-ar="حملات التسويق عبر وسائل التواصل" en="Social media marketing campaigns">حملات التسويق عبر وسائل التواصل</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- العقود الحالية -->
+            <div class="contracts-list">
+                <h3 data-ar="عقودي" en="My Contracts">عقودي</h3>
+                <div class="contract-item">
+                    <div class="contract-info">
+                        <div class="contract-title">
+                            <h4>عقد تطوير موقع شركة الأفق الرقمي</h4>
+                            <span class="contract-status active">نشط</span>
+                        </div>
+                        <div class="contract-meta">
+                            <span><i class="fas fa-user"></i> شركة الأفق الرقمي</span>
+                            <span><i class="fas fa-calendar"></i> 2024-01-15</span>
+                            <span><i class="fas fa-money-bill-wave"></i> 15,000 SAR</span>
+                        </div>
+                    </div>
+                    <div class="contract-actions">
+                        <button class="btn btn-outline btn-sm"><i class="fas fa-eye"></i> <span data-ar="عرض" en="View">عرض</span></button>
+                        <button class="btn btn-primary btn-sm"><i class="fas fa-download"></i> <span data-ar="تحميل PDF" en="Download PDF">تحميل PDF</span></button>
+                    </div>
+                </div>
+                <div class="contract-item">
+                    <div class="contract-info">
+                        <div class="contract-title">
+                            <h4>عقد تصميم هوية شركة التقنية المتقدمة</h4>
+                            <span class="contract-status pending">في انتظار التوقيع</span>
+                        </div>
+                        <div class="contract-meta">
+                            <span><i class="fas fa-user"></i> شركة التقنية المتقدمة</span>
+                            <span><i class="fas fa-calendar"></i> 2024-01-12</span>
+                            <span><i class="fas fa-money-bill-wave"></i> 8,500 SAR</span>
+                        </div>
+                    </div>
+                    <div class="contract-actions">
+                        <button class="btn btn-outline btn-sm"><i class="fas fa-eye"></i> <span data-ar="عرض" en="View">عرض</span></button>
+                        <button class="btn btn-primary btn-sm"><i class="fas fa-signature"></i> <span data-ar="إرسال للتوقيع" en="Send to Sign">إرسال للتوقيع</span></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- صفحة عروض الأسعار -->
+        <section class="page" id="page-proposals">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1 data-ar="عروض الأسعار" en="Proposals">عروض الأسعار</h1>
+                    <p data-ar="إنشاء عروض أسعار احترافية" en="Create professional proposals">إنشاء عروض أسعار احترافية</p>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-primary" onclick="showCreateProposal()">
+                        <i class="fas fa-plus"></i>
+                        <span data-ar="عرض جديد" en="New Proposal">عرض جديد</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- معرض عروض الأسعار -->
+            <div class="proposals-grid">
+                <div class="proposal-card">
+                    <div class="proposal-preview">
+                        <img src="https://via.placeholder.com/400x300/005F73/fff?text=عرض+سعر+تطوير+موقع" alt="عرض سعر">
+                    </div>
+                    <div class="proposal-info">
+                        <h4>تطوير موقع شركة الأفق الرقمي</h4>
+                        <p>شركة الأفق الرقمي</p>
+                        <div class="proposal-meta">
+                            <span class="price">15,000 SAR</span>
+                            <span class="status sent">مرسل</span>
+                        </div>
+                    </div>
+                    <div class="proposal-actions">
+                        <button class="btn btn-outline btn-sm"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-outline btn-sm"><i class="fas fa-copy"></i></button>
+                        <button class="btn btn-primary btn-sm"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+                <div class="proposal-card">
+                    <div class="proposal-preview">
+                        <img src="https://via.placeholder.com/400x300/EE9B00/fff?text=عرض+سعر+هوية+بصرية" alt="عرض سعر">
+                    </div>
+                    <div class="proposal-info">
+                        <h4>تصميم الهوية البصرية</h4>
+                        <p>شركة التقنية المتقدمة</p>
+                        <div class="proposal-meta">
+                            <span class="price">8,500 SAR</span>
+                            <span class="status draft">مسودة</span>
+                        </div>
+                    </div>
+                    <div class="proposal-actions">
+                        <button class="btn btn-outline btn-sm"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-primary btn-sm"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+                <div class="proposal-card">
+                    <div class="proposal-preview">
+                        <img src="https://via.placeholder.com/400x300/009688/fff?text=عرض+سعر+تطبيق+جوال" alt="عرض سعر">
+                    </div>
+                    <div class="proposal-info">
+                        <h4>تطوير تطبيق جوال</h4>
+                        <p>مؤسسة الأحلام</p>
+                        <div class="proposal-meta">
+                            <span class="price">45,000 SAR</span>
+                            <span class="status accepted">مقبول</span>
+                        </div>
+                    </div>
+                    <div class="proposal-actions">
+                        <button class="btn btn-outline btn-sm"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-primary btn-sm"><i class="fas fa-file-contract"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- صفحة المكتبة الإعلامية -->
+        <section class="page" id="page-media">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1 data-ar="المكتبة الإعلامية" en="Media Library">المكتبة الإعلامية</h1>
+                    <p data-ar="إدارة الصور والفيديوهات" en="Manage images and videos">إدارة الصور والفيديوهات</p>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-primary" onclick="showUploadMedia()">
+                        <i class="fas fa-upload"></i>
+                        <span data-ar="رفع ملفات" en="Upload Files">رفع ملفات</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- فلاتر الوسائط -->
+            <div class="media-filters">
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all" data-ar="الكل" en="All">الكل</button>
+                    <button class="filter-tab" data-filter="images" data-ar="صور" en="Images">صور</button>
+                    <button class="filter-tab" data-filter="videos" data-ar="فيديو" en="Videos">فيديو</button>
+                    <button class="filter-tab" data-filter="documents" data-ar="مستندات" en="Documents">مستندات</button>
+                </div>
+                <div class="view-toggle">
+                    <button class="view-btn active"><i class="fas fa-th-large"></i></button>
+                    <button class="view-btn"><i class="fas fa-list"></i></button>
+                </div>
+            </div>
+            
+            <!-- معرض الوسائط -->
+            <div class="media-gallery">
+                <div class="media-item video" data-type="video">
+                    <div class="media-thumbnail">
+                        <img src="https://via.placeholder.com/300x200/009688/fff?text=فيديو+تعريفي" alt="فيديو">
+                        <div class="media-overlay">
+                            <button class="play-btn"><i class="fas fa-play"></i></button>
+                        </div>
+                        <span class="media-duration">2:35</span>
+                    </div>
+                    <div class="media-info">
+                        <h4>فيديو تعريفي للشركة</h4>
+                        <p>MP4 • 15.2 MB</p>
+                    </div>
+                </div>
+                <div class="media-item image">
+                    <div class="media-thumbnail">
+                        <img src="https://via.placeholder.com/300x200/005F73/fff?text=شعار+الشركة" alt="شعار">
+                        <div class="media-overlay">
+                            <button class="zoom-btn"><i class="fas fa-search-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="media-info">
+                        <h4>شعار الشركة الرئيسي</h4>
+                        <p>PNG • 245 KB</p>
+                    </div>
+                </div>
+                <div class="media-item image">
+                    <div class="media-thumbnail">
+                        <img src="https://via.placeholder.com/300x200/EE9B00/fff?text=أيقونات+التطبيق" alt="أيقونات">
+                        <div class="media-overlay">
+                            <button class="zoom-btn"><i class="fas fa-search-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="media-info">
+                        <h4>أيقونات التطبيق</h4>
+                        <p>SVG • 56 KB</p>
+                    </div>
+                </div>
+                <div class="media-item image">
+                    <div class="media-thumbnail">
+                        <img src="https://via.placeholder.com/300x200/673AB7/fff?text=واجهة+الموقع" alt="واجهة">
+                        <div class="media-overlay">
+                            <button class="zoom-btn"><i class="fas fa-search-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="media-info">
+                        <h4>الصفحة الرئيسية</h4>
+                        <p>PNG • 1.2 MB</p>
+                    </div>
+                </div>
+                <div class="media-item video">
+                    <div class="media-thumbnail">
+                        <img src="https://via.placeholder.com/300x200/FF5722/fff?text=عرض+مميزات" alt="فيديو">
+                        <div class="media-overlay">
+                            <button class="play-btn"><i class="fas fa-play"></i></button>
+                        </div>
+                        <span class="media-duration">1:48</span>
+                    </div>
+                    <div class="media-info">
+                        <h4>عرض مميزات المنتج</h4>
+                        <p>MP4 • 28.5 MB</p>
+                    </div>
+                </div>
+                <div class="media-item document">
+                    <div class="media-thumbnail document">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="media-info">
+                        <h4>كتيب المنتج</h4>
+                        <p>PDF • 2.4 MB</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- صفحة الأتمتة -->
+        <section class="page" id="page-automation">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1 data-ar="الأتمتة" en="Automation">الأتمتة</h1>
+                    <p data-ar="أتمتة المهام والتنبيهات" en="Automate tasks and notifications">أتمتة المهام والتنبيهات</p>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-primary" onclick="showCreateAutomation()">
+                        <i class="fas fa-plus"></i>
+                        <span data-ar="أتمتة جديدة" en="New Automation">أتمتة جديدة</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- بطاقات الأتمتة -->
+            <div class="automation-grid">
+                <div class="automation-card active">
+                    <div class="automation-header">
+                        <div class="automation-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="automation-status active">نشط</div>
+                    </div>
+                    <div class="automation-body">
+                        <h4>تذكير الفواتير المستحقة</h4>
+                        <p>إرسال تذكير تلقائي قبل 3 أيام من تاريخ الاستحقاق</p>
+                        <div class="automation-trigger">
+                            <span class="trigger-label">المشغل:</span>
+                            <span class="trigger-value">الفاتورة ستستحق خلال 3 أيام</span>
+                        </div>
+                        <div class="automation-action">
+                            <span class="action-label">الإجراء:</span>
+                            <span class="action-value"><i class="fas fa-envelope"></i> إرسال بريد إلكتروني</span>
+                        </div>
+                    </div>
+                    <div class="automation-footer">
+                        <div class="automation-stats">
+                            <span><i class="fas fa-check-circle"></i> 45 تنفيذ</span>
+                            <span><i class="fas fa-calendar"></i> منذ شهر</span>
+                        </div>
+                        <div class="automation-controls">
+                            <button class="control-btn"><i class="fas fa-edit"></i></button>
+                            <button class="control-btn"><i class="fas fa-toggle-on"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="automation-card active">
+                    <div class="automation-header">
+                        <div class="automation-icon">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <div class="automation-status active">نشط</div>
+                    </div>
+                    <div class="automation-body">
+                        <h4>فاتورة شهرية متكررة</h4>
+                        <p>إنشاء فاتورة تلقائية لعميل ثابت كل شهر</p>
+                        <div class="automation-trigger">
+                            <span class="trigger-label">المشغل:</span>
+                            <span class="trigger-value">كل يوم 1 من الشهر</span>
+                        </div>
+                        <div class="automation-action">
+                            <span class="action-label">الإجراء:</span>
+                            <span class="action-value"><i class="fas fa-plus-circle"></i> إنشاء فاتورة</span>
+                        </div>
+                    </div>
+                    <div class="automation-footer">
+                        <div class="automation-stats">
+                            <span><i class="fas fa-check-circle"></i> 6 تنفيذ</span>
+                            <span><i class="fas fa-calendar"></i> منذ 6 أشهر</span>
+                        </div>
+                        <div class="automation-controls">
+                            <button class="control-btn"><i class="fas fa-edit"></i></button>
+                            <button class="control-btn"><i class="fas fa-toggle-on"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="automation-card">
+                    <div class="automation-header">
+                        <div class="automation-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="automation-status inactive">غير نشط</div>
+                    </div>
+                    <div class="automation-body">
+                        <h4>إشعار دفعة مستلمة</h4>
+                        <p>إرسال إشعار عند استلام دفعة جديدة</p>
+                        <div class="automation-trigger">
+                            <span class="trigger-label">المشغل:</span>
+                            <span class="trigger-value">تم استلام الدفعة</span>
+                        </div>
+                        <div class="automation-action">
+                            <span class="action-label">الإجراء:</span>
+                            <span class="action-value"><i class="fas fa-bell"></i> إشعار في التطبيق</span>
+                        </div>
+                    </div>
+                    <div class="automation-footer">
+                        <div class="automation-stats">
+                            <span><i class="fas fa-clock"></i> لم يُفعّل بعد</span>
+                        </div>
+                        <div class="automation-controls">
+                            <button class="control-btn"><i class="fas fa-edit"></i></button>
+                            <button class="control-btn"><i class="fas fa-toggle-off"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="automation-card">
+                    <div class="automation-header">
+                        <div class="automation-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="automation-status inactive">غير نشط</div>
+                    </div>
+                    <div class="automation-body">
+                        <h4>تذكير بتجديد العقد</h4>
+                        <p>إرسال تذكير قبل 30 يوم من انتهاء العقد</p>
+                        <div class="automation-trigger">
+                            <span class="trigger-label">المشغل:</span>
+                            <span class="trigger-value">العقد سينتهي خلال 30 يوم</span>
+                        </div>
+                        <div class="automation-action">
+                            <span class="action-label">الإجراء:</span>
+                            <span class="action-value"><i class="fas fa-envelope"></i> إرسال بريد + إشعار</span>
+                        </div>
+                    </div>
+                    <div class="automation-footer">
+                        <div class="automation-stats">
+                            <span><i class="fas fa-clock"></i> لم يُفعّل بعد</span>
+                        </div>
+                        <div class="automation-controls">
+                            <button class="control-btn"><i class="fas fa-edit"></i></button>
+                            <button class="control-btn"><i class="fas fa-toggle-off"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- صفحة التقارير -->
+        <section class="page" id="page-reports">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1 data-ar="التقارير" en="Reports">التقارير</h1>
+                    <p data-ar="تقارير تفصيلية عن أداء عملك" en="Detailed business performance reports">تقارير تفصيلية عن أداء عملك</p>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-download"></i>
+                        <span data-ar="تصدير التقرير" en="Export Report">تصدير التقرير</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- ملخص التقارير -->
+            <div class="report-summary">
+                <div class="summary-card">
+                    <h4 data-ar="إجمالي الإيرادات" en="Total Revenue">إجمالي الإيرادات</h4>
+                    <div class="summary-value">145,250 <span class="currency">SAR</span></div>
+                    <div class="summary-change up">+12.5% عن الشهر الماضي</div>
+                </div>
+                <div class="summary-card">
+                    <h4 data-ar="إجمالي المصروفات" en="Total Expenses">إجمالي المصروفات</h4>
+                    <div class="summary-value">28,500 <span class="currency">SAR</span></div>
+                    <div class="summary-change down">-5% عن الشهر الماضي</div>
+                </div>
+                <div class="summary-card">
+                    <h4 data-ar="صافي الربح" en="Net Profit">صافي الربح</h4>
+                    <div class="summary-value">116,750 <span class="currency">SAR</span></div>
+                    <div class="summary-change up">+18% عن الشهر الماضي</div>
+                </div>
+            </div>
+            
+            <!-- رسوم بيانية -->
+            <div class="reports-grid">
+                <div class="report-chart">
+                    <div class="card-header">
+                        <h3 data-ar="الإيرادات الشهرية" en="Monthly Revenue">الإيرادات الشهرية</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="monthlyRevenueChart"></canvas>
+                    </div>
+                </div>
+                <div class="report-chart">
+                    <div class="card-header">
+                        <h3 data-ar="أداء العملاء" en="Client Performance">أداء العملاء</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="clientPerformanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- صفحة العملاء -->
+        <section class="page" id="page-clients">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1 data-ar="العملاء" en="Clients">العملاء</h1>
+                    <p data-ar="إدارة قاعدة بيانات العملاء" en="Manage client database">إدارة قاعدة بيانات العملاء</p>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        <span data-ar="إضافة عميل" en="Add Client">إضافة عميل</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="clients-grid">
+                <div class="client-card">
+                    <div class="client-avatar">
+                        <img src="https://ui-avatars.com/api/?name=شركة+الأفق+الرقمي&background=005F73&color=fff" alt="">
+                    </div>
+                    <div class="client-info">
+                        <h4>شركة الأفق الرقمي</h4>
+                        <p>info@alifq.com</p>
+                        <div class="client-stats">
+                            <span><i class="fas fa-file-invoice"></i> 8 فواتير</span>
+                            <span><i class="fas fa-money-bill-wave"></i> 45,000 SAR</span>
+                        </div>
+                    </div>
+                    <div class="client-actions">
+                        <button class="btn btn-outline btn-sm"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-outline btn-sm"><i class="fas fa-edit"></i></button>
+                    </div>
+                </div>
+                <div class="client-card">
+                    <div class="client-avatar">
+                        <img src="https://ui-avatars.com/api/?name=أحمد+العمري&background=EE9B00&color=fff" alt="">
+                    </div>
+                    <div class="client-info">
+                        <h4>أحمد العمري</h4>
+                        <p>ahmed@email.com</p>
+                        <div class="client-stats">
+                            <span><i class="fas fa-file-invoice"></i> 3 فواتير</span>
+                            <span><i class="fas fa-money-bill-wave"></i> 12,500 SAR</span>
+                        </div>
+                    </div>
+                    <div class="client-actions">
+                        <button class="btn btn-outline btn-sm"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-outline btn-sm"><i class="fas fa-edit"></i></button>
+                    </div>
+                </div>
+                <div class="client-card">
+                    <div class="client-avatar">
+                        <img src="https://ui-avatars.com/api/?name=سارة+علي&background=009688&color=fff" alt="">
+                    </div>
+                    <div class="client-info">
+                        <h4>سارة علي</h4>
+                        <p>sara@email.com</p>
+                        <div class="client-stats">
+                            <span><i class="fas fa-file-invoice"></i> 5 فواتير</span>
+                            <span><i class="fas fa-money-bill-wave"></i> 18,200 SAR</span>
+                        </div>
+                    </div>
+                    <div class="client-actions">
+                        <button class="btn btn-outline btn-sm"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-outline btn-sm"><i class="fas fa-edit"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- النافذة المنبثقة للإنشاء السريع -->
+    <div class="quick-action-modal" id="quickActionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-ar="إنشاء جديد" en="Create New">إنشاء جديد</h3>
+                <button class="close-modal" onclick="closeQuickAction()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="quick-actions-grid">
+                    <button class="quick-action-item" onclick="showCreateInvoice(); closeQuickAction();">
+                        <div class="action-icon invoice">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <span data-ar="فاتورة" en="Invoice">فاتورة</span>
+                    </button>
+                    <button class="quick-action-item" onclick="showCreateContract(); closeQuickAction();">
+                        <div class="action-icon contract">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <span data-ar="عقد" en="Contract">عقد</span>
+                    </button>
+                    <button class="quick-action-item" onclick="showCreateProposal(); closeQuickAction();">
+                        <div class="action-icon proposal">
+                            <i class="fas fa-file-powerpoint"></i>
+                        </div>
+                        <span data-ar="عرض سعر" en="Proposal">عرض سعر</span>
+                    </button>
+                    <button class="quick-action-item" onclick="showAddClient(); closeQuickAction();">
+                        <div class="action-icon client">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <span data-ar="عميل" en="Client">عميل</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- النافذة المنبثقة لإنشاء فاتورة -->
+    <div class="modal" id="invoiceModal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3 data-ar="إنشاء فاتورة جديدة" en="Create New Invoice">إنشاء فاتورة جديدة</h3>
+                <button class="close-modal" onclick="closeModal('invoiceModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="invoice-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-ar="اختر العميل" en="Select Client">اختر العميل</label>
+                            <select>
+                                <option data-ar="اختر عميلاً..." en="Select client...">اختر عميلاً...</option>
+                                <option>شركة الأفق الرقمي</option>
+                                <option>أحمد العمري</option>
+                                <option>سارة علي</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-ar="رقم الفاتورة" en="Invoice Number">رقم الفاتورة</label>
+                            <input type="text" value="#INV-2024-159" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label data-ar="تاريخ الإصدار" en="Issue Date">تاريخ الإصدار</label>
+                            <input type="date" value="2024-01-16">
+                        </div>
+                        <div class="form-group">
+                            <label data-ar="تاريخ الاستحقاق" en="Due Date">تاريخ الاستحقاق</label>
+                            <input type="date" value="2024-02-16">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4 data-ar="تفاصيل الفاتورة" en="Invoice Details">تفاصيل الفاتورة</h4>
+                        <table class="items-table">
+                            <thead>
+                                <tr>
+                                    <th data-ar="البند" en="Item">البند</th>
+                                    <th data-ar="الكمية" en="Quantity">الكمية</th>
+                                    <th data-ar="السعر" en="Price">السعر</th>
+                                    <th data-ar="الضريبة" en="Tax">الضريبة</th>
+                                    <th data-ar="المجموع" en="Total">المجموع</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" value="تطوير موقع إلكتروني" placeholder="..."></td>
+                                    <td><input type="number" value="1"></td>
+                                    <td><input type="number" value="5000"></td>
+                                    <td>
+                                        <select>
+                                            <option value="15">15%</option>
+                                            <option value="0">0%</option>
+                                        </select>
+                                    </td>
+                                    <td class="row-total">5,750 SAR</td>
+                                    <td><button class="remove-row"><i class="fas fa-trash"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="add-item-btn"><i class="fas fa-plus"></i> <span data-ar="إضافة بند" en="Add Item">إضافة بند</span></button>
+                    </div>
+                    
+                    <div class="invoice-summary">
+                        <div class="summary-row">
+                            <span data-ar="المجموع الفرعي" en="Subtotal">المجموع الفرعي</span>
+                            <span>5,000 SAR</span>
+                        </div>
+                        <div class="summary-row">
+                            <span data-ar="الضريبة (15%)" en="Tax (15%)">الضريبة (15%)</span>
+                            <span>750 SAR</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span data-ar="المجموع الكلي" en="Total">المجموع الكلي</span>
+                            <span>5,750 SAR</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('invoiceModal')" data-ar="إلغاء" en="Cancel">إلغاء</button>
+                <button class="btn btn-outline"><i class="fas fa-eye"></i> <span data-ar="معاينة" en="Preview">معاينة</span></button>
+                <button class="btn btn-primary"><i class="fas fa-save"></i> <span data-ar="حفظ الفاتورة" en="Save Invoice">حفظ الفاتورة</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>

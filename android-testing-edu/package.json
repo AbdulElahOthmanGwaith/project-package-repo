@@ -1,0 +1,18 @@
+{
+  "name": "android-testing-edu",
+  "version": "1.0.0",
+  "description": "منصة تعليمية شاملة لمنظومة اختبار Android SDK",
+  "main": "server.js",
+  "scripts": {
+    "start": "npx serve . -p 3000",
+    "dev": "npx serve .",
+    "test": "node test.js"
+  },
+  "keywords": ["android", "testing", "education", "arabic"],
+  "author": "MiniMax Agent",
+  "license": "MIT",
+  "dependencies": {
+    "playwright": "^1.57.0",
+    "serve": "^14.2.1"
+  }
+}

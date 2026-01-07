@@ -1,0 +1,1764 @@
+/* متغيرات الألوان والمظهر */
+:root {
+    /* ألوان Android الرسمية */
+    --android-green: #3DDC84;
+    --android-navy: #073042;
+    --android-dark: #0D1B2A;
+    
+    /* ألوان ثانوية */
+    --amber: #FF6F00;
+    --blue: #2196F3;
+    --purple: #9C27B0;
+    --red: #F44336;
+    --teal: #009688;
+    
+    /* ألوان الخلفية */
+    --bg-light: #FFFFFF;
+    --bg-secondary: #F5F8FA;
+    --bg-tertiary: #EBF0F5;
+    --bg-dark: #121212;
+    --bg-dark-secondary: #1A1A2E;
+    --bg-dark-tertiary: #16213E;
+    
+    /* ألوان النص */
+    --text-light: #073042;
+    --text-secondary: #5A6F7C;
+    --text-muted: #8A9BA8;
+    --text-dark: #E8EEF2;
+    --text-dark-secondary: #B0BEC5;
+    
+    /* الحدود والظلال */
+    --border-light: #E0E6EC;
+    --border-dark: #2A3A4A;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --shadow-glow: 0 4px 20px rgba(61, 220, 132, 0.3);
+    
+    /* الانتقالات */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* الحواف والانحناءات */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    
+    /* المسافات */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+    --space-3xl: 64px;
+    
+    /* الطبقة Z */
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-fixed: 300;
+    --z-modal: 400;
+    --z-tooltip: 500;
+}
+
+/* المظهر الداكن */
+[data-theme="dark"] {
+    --bg-light: #121212;
+    --bg-secondary: #1A1A2E;
+    --bg-tertiary: #16213E;
+    --border-light: #2A3A4A;
+    --text-light: #E8EEF2;
+    --text-secondary: #B0BEC5;
+    --text-muted: #78909C;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* إعادة تعيين الأنماط الأساسية */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-light);
+    line-height: 1.7;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
+    overflow-x: hidden;
+}
+
+/* شريط التقدم */
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--android-green), var(--teal));
+    width: 0%;
+    z-index: var(--z-fixed);
+    transition: width var(--transition-fast);
+}
+
+/* الرأس العلوي */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-light);
+    border-bottom: 1px solid var(--border-light);
+    z-index: var(--z-sticky);
+    transition: all var(--transition-normal);
+}
+
+[data-theme="dark"] .header {
+    background: var(--bg-dark-secondary);
+    border-color: var(--border-dark);
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--space-md) var(--space-xl);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--android-navy);
+    letter-spacing: -0.5px;
+}
+
+[data-theme="dark"] .logo-text {
+    color: var(--android-green);
+}
+
+/* قائمة التنقل الرئيسية */
+.main-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    gap: var(--space-lg);
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.nav-link:hover {
+    color: var(--android-green);
+    background: var(--bg-secondary);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--android-green);
+    transition: width var(--transition-normal);
+}
+
+.nav-link:hover::after {
+    width: 80%;
+}
+
+/* إجراءات الرأس */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.search-btn, .theme-toggle {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+}
+
+.search-btn:hover, .theme-toggle:hover {
+    background: var(--android-green);
+    color: var(--android-navy);
+}
+
+/* قائمة الجوال */
+.mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: var(--space-sm);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.mobile-menu-btn span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text-light);
+    border-radius: 2px;
+    transition: all var(--transition-fast);
+}
+
+/* قائمة البحث المنبثقة */
+.search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: var(--z-modal);
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+}
+
+.search-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.search-container {
+    background: var(--bg-light);
+    width: 90%;
+    max-width: 600px;
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    transform: translateY(-20px);
+    transition: transform var(--transition-normal);
+}
+
+.search-overlay.active .search-container {
+    transform: translateY(0);
+}
+
+.search-input {
+    width: 100%;
+    padding: var(--space-md);
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-md);
+    font-size: 1.1rem;
+    font-family: inherit;
+    background: var(--bg-secondary);
+    color: var(--text-light);
+    outline: none;
+    transition: border-color var(--transition-fast);
+}
+
+.search-input:focus {
+    border-color: var(--android-green);
+}
+
+.close-search {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+/* القائمة الجانبية */
+.sidebar {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    width: 280px;
+    height: calc(100vh - 80px);
+    background: var(--bg-light);
+    border-left: 1px solid var(--border-light);
+    padding: var(--space-lg);
+    overflow-y: auto;
+    z-index: var(--z-sticky);
+    transition: all var(--transition-normal);
+}
+
+[data-theme="dark"] .sidebar {
+    background: var(--bg-dark-secondary);
+    border-color: var(--border-dark);
+}
+
+.sidebar-header h3 {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--space-md);
+}
+
+.sidebar-nav {
+    margin-top: var(--space-md);
+}
+
+.sidebar-list {
+    list-style: none;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-xs);
+    transition: all var(--transition-fast);
+}
+
+.sidebar-link:hover {
+    background: var(--bg-secondary);
+    color: var(--android-green);
+}
+
+.sidebar-icon {
+    font-size: 1.1rem;
+}
+
+/* المحتوى الرئيسي */
+.main-content {
+    margin-right: 280px;
+    margin-top: 70px;
+    min-height: calc(100vh - 70px);
+    padding: var(--space-xl);
+    transition: margin-right var(--transition-normal);
+}
+
+/* قسم الهيرو */
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+    padding: var(--space-3xl) 0;
+    min-height: 80vh;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--android-green), var(--teal));
+    color: var(--android-navy);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-xl);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: var(--space-lg);
+    color: var(--text-light);
+}
+
+.hero-title .highlight {
+    background: linear-gradient(135deg, var(--android-green), var(--teal));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xl);
+    max-width: 540px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: var(--space-md);
+    margin-bottom: var(--space-2xl);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-xl);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border: none;
+}
+
+.btn-primary {
+    background: var(--android-green);
+    color: var(--android-navy);
+}
+
+.btn-primary:hover {
+    background: #2DC872;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-light);
+    border: 2px solid var(--border-light);
+}
+
+.btn-secondary:hover {
+    border-color: var(--android-green);
+    color: var(--android-green);
+}
+
+.hero-stats {
+    display: flex;
+    gap: var(--space-xl);
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--android-green);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-diagram {
+    width: 100%;
+    max-width: 450px;
+    filter: drop-shadow(var(--shadow-lg));
+}
+
+.diagram-node {
+    cursor: pointer;
+    transition: transform var(--transition-fast);
+}
+
+.diagram-node:hover {
+    transform: scale(1.05);
+}
+
+/* الأقسام العامة */
+.section {
+    padding: var(--space-3xl) 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+[data-theme="dark"] .section {
+    border-color: var(--border-dark);
+}
+
+.section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto var(--space-2xl);
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: var(--space-md);
+}
+
+.section-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+/* قسم البنية التقنية */
+.architecture-diagram {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    margin-bottom: var(--space-2xl);
+    overflow-x: auto;
+}
+
+.full-architecture-diagram {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    display: block;
+}
+
+.arch-layer {
+    transition: transform var(--transition-normal);
+}
+
+.arch-layer:hover {
+    transform: scale(1.02);
+}
+
+.flow-explanation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+}
+
+.flow-step {
+    background: var(--bg-secondary);
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    max-width: 200px;
+}
+
+.flow-number {
+    width: 40px;
+    height: 40px;
+    background: var(--android-green);
+    color: var(--android-navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    margin: 0 auto var(--space-sm);
+}
+
+.flow-content h4 {
+    font-size: 1rem;
+    margin-bottom: var(--space-xs);
+}
+
+.flow-content p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.flow-arrow {
+    font-size: 1.5rem;
+    color: var(--android-green);
+    font-weight: bold;
+}
+
+/* بطاقات JAR */
+.jar-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-xl);
+}
+
+.jar-card {
+    background: var(--bg-light);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--transition-normal);
+}
+
+[data-theme="dark"] .jar-card {
+    background: var(--bg-dark-secondary);
+    border-color: var(--border-dark);
+}
+
+.jar-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-header {
+    padding: var(--space-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    color: white;
+}
+
+.card-header.android-color {
+    background: linear-gradient(135deg, var(--android-navy), #0A3D52);
+}
+
+.card-header.base-color {
+    background: linear-gradient(135deg, var(--amber), #E65100);
+}
+
+.card-header.mock-color {
+    background: linear-gradient(135deg, var(--blue), #1565C0);
+}
+
+.card-header.runner-color {
+    background: linear-gradient(135deg, var(--purple), #6A1B9A);
+}
+
+.card-icon {
+    font-size: 2rem;
+}
+
+.card-title h3 {
+    font-size: 1.2rem;
+    margin-bottom: var(--space-xs);
+}
+
+.card-badge {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-sm);
+}
+
+.card-body {
+    padding: var(--space-lg);
+}
+
+.card-description {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-md);
+    font-size: 0.95rem;
+}
+
+.card-stats {
+    display: flex;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--border-light);
+}
+
+[data-theme="dark"] .card-stats {
+    border-color: var(--border-dark);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-item .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.stat-item .stat-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--android-green);
+}
+
+.card-classes h4 {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: var(--space-sm);
+}
+
+.card-classes ul {
+    list-style: none;
+}
+
+.card-classes li {
+    padding: var(--space-xs) 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.card-classes code {
+    background: var(--bg-secondary);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--android-green);
+}
+
+.card-footer {
+    padding: var(--space-md) var(--space-lg);
+    background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .card-footer {
+    background: var(--bg-dark-tertiary);
+}
+
+.card-btn {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    background: transparent;
+    border: 2px solid var(--android-green);
+    color: var(--android-green);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.card-btn:hover {
+    background: var(--android-green);
+    color: var(--android-navy);
+}
+
+/* كتل التفاصيل */
+.detail-block {
+    background: var(--bg-light);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-2xl);
+    overflow: hidden;
+}
+
+[data-theme="dark"] .detail-block {
+    background: var(--bg-dark-secondary);
+    border-color: var(--border-dark);
+}
+
+.detail-header {
+    padding: var(--space-lg) var(--space-xl);
+    color: white;
+}
+
+.detail-header.android-color {
+    background: linear-gradient(135deg, var(--android-navy), #0A3D52);
+}
+
+.detail-header.base-color {
+    background: linear-gradient(135deg, var(--amber), #E65100);
+}
+
+.detail-header.mock-color {
+    background: linear-gradient(135deg, var(--blue), #1565C0);
+}
+
+.detail-header.runner-color {
+    background: linear-gradient(135deg, var(--purple), #6A1B9A);
+}
+
+.detail-header h2 {
+    font-size: 1.5rem;
+}
+
+.detail-content {
+    padding: var(--space-xl);
+}
+
+.detail-intro {
+    margin-bottom: var(--space-xl);
+}
+
+.detail-intro h3 {
+    font-size: 1.3rem;
+    margin-bottom: var(--space-md);
+    color: var(--android-green);
+}
+
+.detail-intro p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+}
+
+/* شبكة المميزات */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+.feature-card {
+    background: var(--bg-secondary);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    text-align: center;
+    transition: all var(--transition-fast);
+}
+
+[data-theme="dark"] .feature-card {
+    background: var(--bg-dark-tertiary);
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-sm);
+}
+
+.feature-card h4 {
+    font-size: 1rem;
+    margin-bottom: var(--space-xs);
+}
+
+.feature-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* قائمة الفئات */
+.classes-list {
+    display: grid;
+    gap: var(--space-lg);
+}
+
+.class-item {
+    background: var(--bg-secondary);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+}
+
+[data-theme="dark"] .class-item {
+    background: var(--bg-dark-tertiary);
+}
+
+.class-item h4 {
+    color: var(--android-green);
+    font-size: 1.1rem;
+    margin-bottom: var(--space-sm);
+}
+
+.class-item p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-md);
+}
+
+.class-item pre {
+    background: var(--bg-dark);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+}
+
+.class-item code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+}
+
+/* قائمة الفوائد */
+.benefits-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+.benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+}
+
+[data-theme="dark"] .benefit-item {
+    background: var(--bg-dark-tertiary);
+}
+
+.benefit-icon {
+    font-size: 1.5rem;
+}
+
+.benefit-item h4 {
+    font-size: 1rem;
+    margin-bottom: var(--space-xs);
+}
+
+.benefit-item p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* شبكة الكائنات الوهمية */
+.mocks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+}
+
+.mock-item {
+    background: var(--bg-secondary);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    border-right: 3px solid var(--blue);
+}
+
+[data-theme="dark"] .mock-item {
+    background: var(--bg-dark-tertiary);
+}
+
+.mock-item h4 {
+    font-size: 0.95rem;
+    margin-bottom: var(--space-xs);
+    color: var(--android-green);
+}
+
+.mock-item p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* مقارنة المشغلات */
+.runners-comparison {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+.runner-item {
+    background: var(--bg-secondary);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+}
+
+[data-theme="dark"] .runner-item {
+    background: var(--bg-dark-tertiary);
+}
+
+.runner-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-sm);
+}
+
+.runner-item h4 {
+    font-size: 1.1rem;
+    color: var(--android-green);
+}
+
+.runner-badge {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+}
+
+.runner-badge.modern {
+    background: var(--android-green);
+    color: var(--android-navy);
+}
+
+.runner-badge.legacy {
+    background: var(--text-muted);
+    color: var(--text-light);
+}
+
+.runner-item > p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-md);
+    font-size: 0.9rem;
+}
+
+.runner-item ul {
+    list-style: none;
+}
+
+.runner-item li {
+    padding: var(--space-xs) 0;
+    padding-right: var(--space-lg);
+    position: relative;
+    font-size: 0.9rem;
+}
+
+.runner-item li::before {
+    content: '✓';
+    position: absolute;
+    right: 0;
+    color: var(--android-green);
+}
+
+/* أمثلة الكود */
+.code-example {
+    background: var(--bg-dark);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-bottom: var(--space-lg);
+}
+
+.code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md) var(--space-lg);
+    background: var(--bg-dark-secondary);
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.code-header h4 {
+    font-size: 0.95rem;
+    color: var(--text-dark-secondary);
+}
+
+.code-actions {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.copy-btn {
+    padding: var(--space-xs) var(--space-md);
+    background: var(--bg-dark-tertiary);
+    border: 1px solid var(--border-dark);
+    color: var(--text-dark-secondary);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.copy-btn:hover {
+    background: var(--android-green);
+    color: var(--android-navy);
+    border-color: var(--android-green);
+}
+
+.copy-btn.copied {
+    background: var(--android-green);
+    color: var(--android-navy);
+}
+
+.code-block {
+    padding: var(--space-lg);
+    overflow-x: auto;
+    margin: 0;
+}
+
+.code-block code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+/* تنسيقات كود Java */
+.language-java {
+    color: #E8EEF2;
+}
+
+/* ملاحظة مهمة */
+.important-note {
+    display: flex;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: rgba(255, 111, 0, 0.1);
+    border-right: 4px solid var(--amber);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-lg);
+}
+
+.note-icon {
+    font-size: 1.5rem;
+}
+
+.note-content h4 {
+    color: var(--amber);
+    margin-bottom: var(--space-sm);
+}
+
+.note-content p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* قسم المقارنة */
+.comparison-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: var(--space-2xl);
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-light);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .comparison-table {
+    background: var(--bg-dark-secondary);
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: var(--space-md) var(--space-lg);
+    text-align: center;
+    border-bottom: 1px solid var(--border-light);
+}
+
+[data-theme="dark"] .comparison-table th,
+[data-theme="dark"] .comparison-table td {
+    border-color: var(--border-dark);
+}
+
+.comparison-table th {
+    background: var(--android-navy);
+    color: white;
+    font-weight: 600;
+}
+
+.comparison-table th:first-child {
+    text-align: right;
+}
+
+.comparison-table td:first-child {
+    text-align: right;
+    font-weight: 500;
+}
+
+.comparison-table tr:hover {
+    background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .comparison-table tr:hover {
+    background: var(--bg-dark-tertiary);
+}
+
+/* دليل القرار */
+.decision-guide {
+    background: var(--bg-secondary);
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+}
+
+[data-theme="dark"] .decision-guide {
+    background: var(--bg-dark-tertiary);
+}
+
+.decision-guide h3 {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    font-size: 1.5rem;
+}
+
+.decision-flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+}
+
+.decision-node {
+    text-align: center;
+    padding: var(--space-lg);
+    background: var(--android-green);
+    color: var(--android-navy);
+    border-radius: var(--radius-lg);
+    max-width: 400px;
+}
+
+.node-icon {
+    font-size: 2rem;
+    margin-bottom: var(--space-sm);
+}
+
+.decision-branch {
+    display: flex;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.branch {
+    background: var(--bg-light);
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    max-width: 250px;
+}
+
+[data-theme="dark"] .branch {
+    background: var(--bg-dark-secondary);
+    border-color: var(--border-dark);
+}
+
+.branch-label {
+    display: block;
+    background: var(--android-navy);
+    color: white;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+    text-align: center;
+}
+
+.branch-path p {
+    margin-bottom: var(--space-sm);
+    font-size: 0.95rem;
+}
+
+.branch-path ul {
+    list-style: disc;
+    padding-right: var(--space-lg);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* قسم الأمثلة */
+.examples-tabs {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+}
+
+.tab-btn {
+    padding: var(--space-sm) var(--space-xl);
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-light);
+    color: var(--text-secondary);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+[data-theme="dark"] .tab-btn {
+    background: var(--bg-dark-tertiary);
+    border-color: var(--border-dark);
+}
+
+.tab-btn:hover {
+    border-color: var(--android-green);
+    color: var(--android-green);
+}
+
+.tab-btn.active {
+    background: var(--android-green);
+    border-color: var(--android-green);
+    color: var(--android-navy);
+}
+
+.examples-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.example-block {
+    display: none;
+}
+
+.example-block.active {
+    display: block;
+}
+
+.example-block h3 {
+    font-size: 1.3rem;
+    margin-bottom: var(--space-lg);
+    color: var(--android-green);
+}
+
+.example-label {
+    display: inline-block;
+    background: var(--android-navy);
+    color: white;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    margin-bottom: var(--space-md);
+}
+
+/* قسم أفضل الممارسات */
+.practices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+}
+
+.practice-card {
+    background: var(--bg-light);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    transition: all var(--transition-normal);
+}
+
+[data-theme="dark"] .practice-card {
+    background: var(--bg-dark-secondary);
+    border-color: var(--border-dark);
+}
+
+.practice-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.practice-icon {
+    font-size: 2rem;
+    margin-bottom: var(--space-md);
+}
+
+.practice-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: var(--space-sm);
+    color: var(--android-green);
+}
+
+.practice-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: var(--space-md);
+}
+
+.mini-code {
+    background: var(--bg-dark);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+}
+
+.mini-code code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+}
+
+.practice-example {
+    font-size: 0.85rem;
+    padding: var(--space-sm);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+}
+
+.practice-example .good {
+    color: var(--android-green);
+}
+
+.practice-example .bad {
+    color: var(--red);
+}
+
+.practice-example code {
+    display: block;
+    margin-top: var(--space-xs);
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-secondary);
+}
+
+/* قسم المصادر */
+.resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+}
+
+.resource-card {
+    display: block;
+    background: var(--bg-light);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    text-decoration: none;
+    transition: all var(--transition-normal);
+}
+
+[data-theme="dark"] .resource-card {
+    background: var(--bg-dark-secondary);
+    border-color: var(--border-dark);
+}
+
+.resource-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--android-green);
+}
+
+.resource-icon {
+    font-size: 2rem;
+    margin-bottom: var(--space-md);
+}
+
+.resource-card h4 {
+    color: var(--text-light);
+    margin-bottom: var(--space-sm);
+}
+
+.resource-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: var(--space-md);
+}
+
+.resource-link {
+    font-size: 0.85rem;
+    color: var(--android-green);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* التذييل */
+.footer {
+    background: var(--android-navy);
+    color: var(--text-dark);
+    padding: var(--space-3xl) var(--space-xl) var(--space-xl);
+    margin-top: var(--space-3xl);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+.footer-logo span {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--android-green);
+}
+
+.footer-description {
+    color: var(--text-dark-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.footer-section h4 {
+    color: var(--android-green);
+    margin-bottom: var(--space-lg);
+    font-size: 1.1rem;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: var(--space-sm);
+}
+
+.footer-links a {
+    color: var(--text-dark-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+    color: var(--android-green);
+}
+
+.social-links {
+    display: flex;
+    gap: var(--space-md);
+}
+
+.social-link {
+    width: 40px;
+    height: 40px;
+    background: var(--bg-dark-tertiary);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dark-secondary);
+    transition: all var(--transition-fast);
+}
+
+.social-link:hover {
+    background: var(--android-green);
+    color: var(--android-navy);
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: var(--space-xl);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* استعلامات الوسائط */
+@media (max-width: 1200px) {
+    .sidebar {
+        display: none;
+    }
+    
+    .main-content {
+        margin-right: 0;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 992px) {
+    .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .hero-description {
+        margin: 0 auto var(--space-xl);
+    }
+    
+    .hero-actions {
+        justify-content: center;
+    }
+    
+    .hero-stats {
+        justify-content: center;
+    }
+    
+    .hero-visual {
+        order: -1;
+    }
+    
+    .main-nav {
+        display: none;
+    }
+    
+    .mobile-menu-btn {
+        display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .header-container {
+        padding: var(--space-sm) var(--space-md);
+    }
+    
+    .logo-text {
+        display: none;
+    }
+    
+    .main-content {
+        padding: var(--space-lg);
+    }
+    
+    .hero {
+        min-height: auto;
+        padding: var(--space-2xl) 0;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+    
+    .hero-actions {
+        flex-direction: column;
+    }
+    
+    .hero-stats {
+        flex-wrap: wrap;
+        gap: var(--space-lg);
+    }
+    
+    .flow-explanation {
+        flex-direction: column;
+    }
+    
+    .flow-arrow {
+        transform: rotate(90deg);
+    }
+    
+    .decision-branch {
+        flex-direction: column;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .footer-logo {
+        justify-content: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .jar-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .examples-tabs {
+        flex-direction: column;
+    }
+    
+    .tab-btn {
+        width: 100%;
+    }
+    
+    .comparison-table {
+        font-size: 0.85rem;
+    }
+    
+    .comparison-table th,
+    .comparison-table td {
+        padding: var(--space-sm);
+    }
+}
+
+/* تحسينات الوصول */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* تركيز لوحة المفاتيح */
+:focus-visible {
+    outline: 2px solid var(--android-green);
+    outline-offset: 2px;
+}
+
+/* كود مختصر في النصوص */
+p code, li code, td code {
+    background: var(--bg-secondary);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9em;
+    color: var(--android-green);
+}
+
+[data-theme="dark"] p code,
+[data-theme="dark"] li code,
+[data-theme="dark"] td code {
+    background: var(--bg-dark-tertiary);
+}
+
+/* تنسيق القوائم داخل المحتوى */
+.detail-content ul, .detail-content ol {
+    margin: var(--space-md) 0;
+    padding-right: var(--space-xl);
+}
+
+.detail-content li {
+    margin-bottom: var(--space-sm);
+    color: var(--text-secondary);
+}
+
+/* تنسيق العناوين داخل المحتوى */
+.detail-content h3 {
+    color: var(--text-light);
+    margin: var(--space-xl) 0 var(--space-md);
+    font-size: 1.3rem;
+}
+
+.detail-content h4 {
+    color: var(--text-light);
+    margin: var(--space-lg) 0 var(--space-sm);
+    font-size: 1.1rem;
+}
+
+/* تأثيرات التحميل */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.detail-block {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* تنسيق خاص للأزرار عند الطباعة */
+@media print {
+    .header, .sidebar, .footer, .progress-bar {
+        display: none;
+    }
+    
+    .main-content {
+        margin: 0;
+        padding: 20px;
+    }
+    
+    .code-block {
+        background: #f5f5f5;
+        color: #333;
+        border: 1px solid #ddd;
+    }
+}
