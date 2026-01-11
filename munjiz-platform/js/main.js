@@ -100,7 +100,12 @@ function initNavigation() {
  */
 function initThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
+    
+    if (!themeToggle) return;
+    
     const themeIcon = themeToggle.querySelector('i');
+    
+    if (!themeIcon) return;
 
     themeToggle.addEventListener('click', function() {
         const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -127,7 +132,7 @@ function initThemeToggle() {
  * تبديل اللغة
  */
 function initLanguageToggle() {
-    const langToggle = document.getElementById('langToggle');
+    langToggle = document.getElementById('langToggle');
     let currentLang = localStorage.getItem('language') || 'ar';
 
     // تعيين اللغة المحفوظة
@@ -143,9 +148,10 @@ function initLanguageToggle() {
 /**
  * تعيين اللغة
  */
+let langToggle; // تعريف المتغير في النطاق العام
+
 function setLanguage(lang) {
     const html = document.documentElement;
-    const currentLangEl = langToggle.querySelector('.current-lang');
     
     // تعيين الاتجاه واللغة
     html.setAttribute('lang', lang);
@@ -153,8 +159,11 @@ function setLanguage(lang) {
     html.setAttribute('data-dir', lang === 'ar' ? 'rtl' : 'ltr');
     
     // تحديث نص زر اللغة
-    if (currentLangEl) {
-        currentLangEl.textContent = lang === 'ar' ? 'English' : 'عربي';
+    if (langToggle) {
+        const currentLangEl = langToggle.querySelector('.current-lang');
+        if (currentLangEl) {
+            currentLangEl.textContent = lang === 'ar' ? 'English' : 'عربي';
+        }
     }
 
     // تحديث جميع العناصر ذات البيانات
@@ -764,10 +773,13 @@ function loadPreferences() {
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     
-    const themeIcon = document.getElementById('themeToggle').querySelector('i');
-    if (savedTheme === 'dark') {
-        themeIcon.classList.remove('fa-moon');
-        themeIcon.classList.add('fa-sun');
+    const themeToggleEl = document.getElementById('themeToggle');
+    if (themeToggleEl) {
+        const themeIcon = themeToggleEl.querySelector('i');
+        if (themeIcon && savedTheme === 'dark') {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
     }
 
     // استعادة اللغة
