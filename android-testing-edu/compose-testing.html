@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار Jetpack Compose | Android Testing Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-text">Android Testing Hub</span>
+            </div>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content" style="margin-right: 0; padding: 100px 20px;">
+        <section class="section">
+            <h1 class="hero-title">اختبار واجهات <span class="highlight">Jetpack Compose</span></h1>
+            <p class="hero-description">تعلم كيفية كتابة اختبارات فعالة لواجهات المستخدم الحديثة المبنية باستخدام Compose.</p>
+            
+            <div class="example-card">
+                <h3>مثال: اختبار زر التفاعل</h3>
+                <pre class="code-block">
+@get:Rule
+val composeTestRule = createComposeRule()
+
+@Test
+fun myTest() {
+    // إعداد الواجهة
+    composeTestRule.setContent {
+        MyButton(text = "انقر هنا")
+    }
+
+    // التحقق من وجود النص
+    composeTestRule.onNodeWithText("انقر هنا").assertExists()
+    
+    // محاكاة النقر
+    composeTestRule.onNodeWithText("انقر هنا").performClick()
+}
+                </pre>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 Android Testing Hub - تحديثات Manus AI</p>
+    </footer>
+</body>
+</html>
